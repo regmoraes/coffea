@@ -1,13 +1,4 @@
-import 'dart:convert';
-
-import 'package:coffea/domain/flavor.dart';
-import 'package:coffea/domain/grind_size.dart';
-import 'package:coffea/domain/method.dart';
-import 'package:coffea/domain/roast.dart';
-
-void main() async {
-  const json = r'''
- {
+{
   "methods": [
     "Aero Press",
     "Aero Press Inverted",
@@ -410,43 +401,4 @@ void main() async {
       ]
     }
   ]
-}
-  ''';
-
-  var _coffeaData = jsonDecode(json);
-
-  Future<List<Flavor>> getFlavors() async {
-    return List<Flavor>.from(
-      _coffeaData["flavors"].map((flavorJson) => Flavor.fromJson(flavorJson)),
-    );
-  }
-
-  Future<List<GrindSize>> getGrindSizes() async {
-    return List<GrindSize>.from(
-      _coffeaData["grind_sizes"]
-          .map((grindSize) => GrindSize.fromJson(grindSize)),
-    );
-  }
-
-  Future<List<Roast>> getRoasts() async {
-    return List<Roast>.from(
-      _coffeaData["roasts"].map((roast) => Roast.fromJson(roast)),
-    );
-  }
-
-  Future<List<Method>> getMethods() async {
-    return List<Method>.from(
-      _coffeaData["methods"].map((method) => Method.fromJson(method)),
-    );
-  }
-
-
-
-  print(getGrindSizes());
-  print(flattenDeep(await getFlavors()).map((e) => e.name).toList());
-  final roasts = await getRoasts();
-  for (var roast in roasts) {
-    print(roast.type);
-  }
-  print(getMethods());
 }
