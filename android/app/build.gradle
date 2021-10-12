@@ -43,9 +43,12 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            release {
+                keyAlias System.getenv('BITRISEIO_ANDROID_KEYSTORE_ALIAS')
+                keyPassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PASSWORD')
+                storeFile file('keystores/coffea-upload-keystore.jks')
+                storePassword System.getenv('BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD')
+            }
         }
     }
 }
