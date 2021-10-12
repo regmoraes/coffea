@@ -1,5 +1,5 @@
-import 'package:coffea/domain/flavor.dart';
-import 'package:coffea/domain/roast.dart';
+import 'package:coffea/bean/flavor.dart';
+import 'package:coffea/bean/roast.dart';
 
 class Bean {
   final String name;

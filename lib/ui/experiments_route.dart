@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ExperimentsPage extends StatelessWidget {
-  const ExperimentsPage({Key? key}) : super(key: key);
+class ExperimentsRoute extends StatelessWidget {
+  const ExperimentsRoute({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

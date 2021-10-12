@@ -1,6 +1,7 @@
-import 'package:coffea/domain/bean.dart';
-import 'package:coffea/domain/flavor.dart';
-import 'package:coffea/domain/roast.dart';
+import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/cubit.dart';
+import 'package:coffea/bean/flavor.dart';
+import 'package:coffea/bean/roast.dart';
 import 'package:coffea/infrastructure/cubit.dart';
 import 'package:coffea/infrastructure/cubit_state.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,9 @@ class AddBeanRouteState extends State<AddBeanRoute> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                    border: UnderlineInputBorder(), labelText: 'Brand'),
+                  border: UnderlineInputBorder(),
+                  labelText: 'Brand',
+                ),
                 onChanged: (text) => _formData.beanBrand = text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -84,23 +87,77 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                 buildWhen: (context, state) => state is FlavorsState,
                 builder: (context, state) {
                   return SearchChoices<Flavor>.multiple(
-                    onChanged: (selectState) => setState(
-                      () => _formData.selectedFlavors = selectState.value,
-                    ),
                     items: state is FlavorsState
                         ? state.flavors
-                            .map((e) =>
-                                DropdownMenuItem(child: Text(e.name), value: e))
+                            .map((flavor) => DropdownMenuItem(
+                                child: Text(flavor.name), value: flavor))
                             .toList()
                         : List.empty(),
+                    hint: "Select items",
+                    searchHint: "Select items",
+                    onChanged: (value) {
+                      setState(() {
+                        _formData.selectedFlavors = value;
+                      });
+                    },
+                    isExpanded: true,
+                    selectedValueWidgetFn: (item) {
+                      return (Container(
+                        margin: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(3.0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent)),
+                        child: Text(
+                          item,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ));
+                    },
+                    selectedAggregateWidgetFn: (List<Widget> list) {
+                      return (Column(children: [
+                        Text("${list.length} items selected"),
+                        Wrap(children: list),
+                      ]));
+                    },
                   );
+                  // return SearchChoices<Flavor>.multiple(
+                  //   hint: const Text("Flavors"),
+                  //   isExpanded: true,
+                  //   onChanged: (selectState) => setState(
+                  //     () => _formData.selectedFlavors = selectState.value,
+                  //   ),
+                  //   selectedValueWidgetFn: (item) {
+                  //     return (Container(
+                  //       margin: const EdgeInsets.all(15.0),
+                  //       padding: const EdgeInsets.all(3.0),
+                  //       decoration:
+                  //       BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                  //       child: Text(
+                  //         item,
+                  //         overflow: TextOverflow.ellipsis,
+                  //       ),
+                  //     ));
+                  //   },
+                  //   selectedAggregateWidgetFn: (List<Widget> list) {
+                  //     return (Column(children: [
+                  //       Text("${list.length} items selected"),
+                  //       Wrap(children: list),
+                  //     ]));
+                  //   },
+                  //   items: state is FlavorsState
+                  //       ? state.flavors
+                  //           .map((e) =>
+                  //               DropdownMenuItem(child: Text(e.name), value: e))
+                  //           .toList()
+                  //       : List.empty(),
+                  // );
                 },
               ),
               ElevatedButton(
                 onPressed: () {
                   if (_formData.isValid) {
-                    final newBean = _formData.buildBean();
-                    context.read<CoffeaCubit>().addBean(newBean);
+                    final newBean = _formData.createBean();
+                    context.read<BeanCubit>().addBean(newBean);
                     Navigator.pop(context);
                   }
                 },
@@ -119,15 +176,16 @@ class _AddBeanFormData {
   late String beanName;
   late String beanBrand;
   late Roast beanRoast;
-  var beanFlavors = <Flavor>[];
+  late List<Flavor> beanFlavors;
+
   Roast? selectedRoast;
-  var selectedFlavors = <Flavor>[];
+  List<Flavor> selectedFlavors = <Flavor>[];
 
   _AddBeanFormData(this.formKey);
 
   bool get isValid => formKey.currentState!.validate();
 
-  Bean buildBean() {
+  Bean createBean() {
     return Bean(
       beanName,
       brand: beanBrand,

@@ -1,6 +1,6 @@
 class Step {
   final String description;
-  final int time;
+  final Duration duration;
 
-  Step(this.description, this.time);
+  Step(this.description, this.duration);
 }

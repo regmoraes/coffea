@@ -1,4 +1,4 @@
-package com.regmoraes.coffea.coffea
+package br.com.coffea
 
 import io.flutter.embedding.android.FlutterActivity
 

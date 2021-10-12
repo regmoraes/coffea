@@ -1,5 +1,5 @@
-import 'package:coffea/domain/bean.dart';
-import 'package:coffea/domain/grind_size.dart';
+import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/grind_size.dart';
 import 'package:flutter/material.dart';
 
 class Recipe {

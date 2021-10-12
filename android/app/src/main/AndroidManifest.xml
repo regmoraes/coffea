@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.regmoraes.coffea.coffea">
-   <application
+    package="br.com.coffea">
+
+    <application
         android:label="coffea"
         android:icon="@mipmap/ic_launcher">
         <activity

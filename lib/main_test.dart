@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:coffea/domain/flavor.dart';
-import 'package:coffea/domain/grind_size.dart';
+import 'package:coffea/bean/flavor.dart';
+import 'package:coffea/bean/grind_size.dart';
+import 'package:coffea/bean/roast.dart';
 import 'package:coffea/domain/method.dart';
-import 'package:coffea/domain/roast.dart';
 
 void main() async {
   const json = r'''
@@ -440,10 +440,8 @@ void main() async {
     );
   }
 
-
-
   print(getGrindSizes());
-  print(flattenDeep(await getFlavors()).map((e) => e.name).toList());
+  // print(flattenDeep(await getFlavors()).map((e) => e.name).toList());
   final roasts = await getRoasts();
   for (var roast in roasts) {
     print(roast.type);

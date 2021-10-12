@@ -1,15 +1,12 @@
 import 'dart:convert';
 
-import 'package:coffea/domain/bean.dart';
-import 'package:coffea/domain/flavor.dart';
-import 'package:coffea/domain/grind_size.dart';
+import 'package:coffea/bean/flavor.dart';
+import 'package:coffea/bean/grind_size.dart';
+import 'package:coffea/bean/roast.dart';
 import 'package:coffea/domain/method.dart';
-import 'package:coffea/domain/roast.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 late Map<String, dynamic> _coffeaData;
-
-var _beans = <Bean>{};
 
 void loadCoffeaData() async {
   _coffeaData = jsonDecode(
@@ -39,15 +36,6 @@ Future<List<Roast>> getRoasts() async {
   return List<Roast>.from(
     _coffeaData["roasts"].map((roast) => Roast.fromJson(roast)),
   );
-}
-
-
-Future<void> addBean(Bean bean) async {
-  _beans.add(bean);
-}
-
-Future<Set<Bean>> getBeans() async {
-  return _beans;
 }
 
 Future<List<Method>> getMethods() async {
