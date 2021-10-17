@@ -1,4 +1,5 @@
 import 'package:coffea/bean/module.dart';
+import 'package:coffea/ui/add_bean_route.dart';
 import 'package:coffea/ui/experiments_route.dart';
 import 'package:coffea/ui/home_route.dart';
 import 'package:coffea/ui/recipe_route.dart';
@@ -6,13 +7,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class CoffeaModule extends Module {
   @override
-  List<Bind> get binds => [...BeanModule().binds];
+  List<Bind> get binds => [];
 
   @override
   List<ModularRoute> get routes => [
         ChildRoute(
-          '/',
-          child: (context, args) => HomeRoute(),
+          Modular.initialRoute,
+          child: (context, args) => const HomeRoute(),
           children: [
             ModuleRoute(
               '/beans',
@@ -27,6 +28,10 @@ class CoffeaModule extends Module {
               child: (_, __) => const ExperimentsRoute(),
             ),
           ],
+        ),
+        ChildRoute(
+          addBeanRouteName,
+          child: (_, __) => const AddBeanRoute(),
         ),
       ];
 }

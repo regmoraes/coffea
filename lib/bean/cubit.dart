@@ -24,4 +24,16 @@ class BeanCubit extends Cubit<BeanState> {
 
     emit(GetBeansState(data: beans));
   }
+
+  void getRoasts() async {
+    final roasts = await beanRepository.getRoasts();
+
+    emit(GetRoastsState(data: roasts));
+  }
+
+  void getFlavors() async {
+    final flavors = await beanRepository.getFlavors(flatten: true);
+
+    emit(GetFlavorsState(data: flavors));
+  }
 }

@@ -1,10 +1,8 @@
 import 'package:coffea/bean/cubit.dart';
 import 'package:coffea/bean/repository.dart';
-import 'package:coffea/ui/add_bean_route.dart';
 import 'package:coffea/ui/beans_route.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-const beansRouteName = '/beans';
 const addBeanRouteName = '/add-bean';
 
 class BeanModule extends Module {
@@ -17,12 +15,8 @@ class BeanModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(
-          beansRouteName,
+          Modular.initialRoute,
           child: (_, __) => const BeansRoute(),
-        ),
-        ChildRoute(
-          addBeanRouteName,
-          child: (context, args) => const AddBeanRoute(),
         ),
       ];
 }

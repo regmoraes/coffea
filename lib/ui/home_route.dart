@@ -1,5 +1,5 @@
-import 'package:coffea/ui/beans_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 const beansPageIndex = 0;
 const recipesPageIndex = 1;
@@ -21,7 +21,7 @@ class _HomeRouteState extends State<HomeRoute> {
       appBar: AppBar(
         title: const Text('Coffea'),
       ),
-      body: const BeansRoute(),
+      body: RouterOutlet(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentNavBarItemIndex,
         items: const [
@@ -42,6 +42,17 @@ class _HomeRouteState extends State<HomeRoute> {
           setState(
             () {
               _currentNavBarItemIndex = itemIndex;
+              switch (itemIndex) {
+                case recipesPageIndex:
+                  Modular.to.navigate('/recipes');
+                  break;
+                case experimentsPageIndex:
+                  Modular.to.navigate('/experiments');
+                  break;
+                case beansPageIndex:
+                  Modular.to.navigate('/beans');
+                  break;
+              }
             },
           );
         },

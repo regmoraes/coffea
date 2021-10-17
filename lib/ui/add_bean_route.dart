@@ -2,12 +2,10 @@ import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/cubit.dart';
 import 'package:coffea/bean/flavor.dart';
 import 'package:coffea/bean/roast.dart';
-import 'package:coffea/infrastructure/cubit.dart';
-import 'package:coffea/infrastructure/cubit_state.dart';
+import 'package:coffea/bean/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import 'package:search_choices/search_choices.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AddBeanRoute extends StatefulWidget {
   const AddBeanRoute({Key? key}) : super(key: key);
@@ -17,14 +15,15 @@ class AddBeanRoute extends StatefulWidget {
 }
 
 class AddBeanRouteState extends State<AddBeanRoute> {
+  final beanCubit = Modular.get<BeanCubit>();
   final _formData = _AddBeanFormData(GlobalKey<FormState>());
 
   @override
   void initState() {
     super.initState();
-    context.read<CoffeaCubit>()
-      ..getRoasts()
-      ..getFlavors();
+    beanCubit
+      ..getFlavors()
+      ..getRoasts();
   }
 
   @override
@@ -61,8 +60,9 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                   return null;
                 },
               ),
-              BlocBuilder<CoffeaCubit, CoffeaState>(
-                buildWhen: (context, state) => state is RoastsState,
+              BlocBuilder<BeanCubit, BeanState>(
+                bloc: beanCubit,
+                buildWhen: (context, state) => state is GetRoastsState,
                 builder: (context, state) {
                   return DropdownButtonFormField<Roast>(
                     hint: const Text("Roast"),
@@ -70,8 +70,8 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                     onChanged: (roast) {
                       setState(() => _formData.selectedRoast = roast);
                     },
-                    items: state is RoastsState
-                        ? state.roasts
+                    items: state is GetRoastsState
+                        ? state.data
                             .map(
                               (roast) => DropdownMenuItem(
                                 value: roast,
@@ -83,82 +83,17 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                   );
                 },
               ),
-              BlocBuilder<CoffeaCubit, CoffeaState>(
-                buildWhen: (context, state) => state is FlavorsState,
-                builder: (context, state) {
-                  return SearchChoices<Flavor>.multiple(
-                    items: state is FlavorsState
-                        ? state.flavors
-                            .map((flavor) => DropdownMenuItem(
-                                child: Text(flavor.name), value: flavor))
-                            .toList()
-                        : List.empty(),
-                    hint: "Select items",
-                    searchHint: "Select items",
-                    onChanged: (value) {
-                      setState(() {
-                        _formData.selectedFlavors = value;
-                      });
-                    },
-                    isExpanded: true,
-                    selectedValueWidgetFn: (item) {
-                      return (Container(
-                        margin: const EdgeInsets.all(15.0),
-                        padding: const EdgeInsets.all(3.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent)),
-                        child: Text(
-                          item,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ));
-                    },
-                    selectedAggregateWidgetFn: (List<Widget> list) {
-                      return (Column(children: [
-                        Text("${list.length} items selected"),
-                        Wrap(children: list),
-                      ]));
-                    },
-                  );
-                  // return SearchChoices<Flavor>.multiple(
-                  //   hint: const Text("Flavors"),
-                  //   isExpanded: true,
-                  //   onChanged: (selectState) => setState(
-                  //     () => _formData.selectedFlavors = selectState.value,
-                  //   ),
-                  //   selectedValueWidgetFn: (item) {
-                  //     return (Container(
-                  //       margin: const EdgeInsets.all(15.0),
-                  //       padding: const EdgeInsets.all(3.0),
-                  //       decoration:
-                  //       BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                  //       child: Text(
-                  //         item,
-                  //         overflow: TextOverflow.ellipsis,
-                  //       ),
-                  //     ));
-                  //   },
-                  //   selectedAggregateWidgetFn: (List<Widget> list) {
-                  //     return (Column(children: [
-                  //       Text("${list.length} items selected"),
-                  //       Wrap(children: list),
-                  //     ]));
-                  //   },
-                  //   items: state is FlavorsState
-                  //       ? state.flavors
-                  //           .map((e) =>
-                  //               DropdownMenuItem(child: Text(e.name), value: e))
-                  //           .toList()
-                  //       : List.empty(),
-                  // );
-                },
+              BlocBuilder<BeanCubit, BeanState>(
+                bloc: beanCubit,
+                buildWhen: (_, current) => current is GetFlavorsState,
+                builder: (context, state) {},
               ),
               ElevatedButton(
                 onPressed: () {
                   if (_formData.isValid) {
                     final newBean = _formData.createBean();
-                    context.read<BeanCubit>().addBean(newBean);
-                    Navigator.pop(context);
+                    beanCubit.addBean(newBean);
+                    Modular.to.navigate('/beans');
                   }
                 },
                 child: const Text('Submit'),
@@ -169,6 +104,10 @@ class AddBeanRouteState extends State<AddBeanRoute> {
       ),
     );
   }
+}
+
+Map<String, dynamic> displayEntry(Flavor flavor) {
+  return {"display": flavor.name, "value": flavor};
 }
 
 class _AddBeanFormData {

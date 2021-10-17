@@ -137,6 +137,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  multiselect_formfield:
+    dependency: "direct main"
+    description:
+      name: multiselect_formfield
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.6"
   nested:
     dependency: transitive
     description:
@@ -158,13 +165,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.1"
-  search_choices:
-    dependency: "direct main"
-    description:
-      name: search_choices
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.14"
   sky_engine:
     dependency: transitive
     description: flutter

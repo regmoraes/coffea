@@ -33,8 +33,7 @@ class BeansRoute extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          await Modular.to.pushNamed(addBeanRouteName);
-          context.read<BeanCubit>().getBeans();
+          Modular.to.pushNamed(addBeanRouteName);
         },
       ),
     );

@@ -1,8 +1,10 @@
-class Flavor {
-  String name;
-  List<Flavor>? flavors;
+import 'package:equatable/equatable.dart';
 
-  Flavor(this.name, this.flavors);
+class Flavor extends Equatable {
+  final String name;
+  final List<Flavor>? flavors;
+
+  const Flavor(this.name, this.flavors);
 
   @override
   String toString() => 'Flavor{name: $name, flavors: $flavors}';
@@ -20,4 +22,7 @@ class Flavor {
       );
     }
   }
+
+  @override
+  List<Object?> get props => [name, flavors];
 }
