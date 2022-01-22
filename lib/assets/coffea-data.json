@@ -13,6 +13,7 @@
     "Coarse"
   ],
   "roasts": [
+    "Custom Profile",
     "Light",
     "Medium-Light",
     "Medium",
@@ -22,38 +23,49 @@
   "flavors": [
     {
       "flavor": "Roasted",
-      "children": [
+      "color": "0xFFD33727",
+      "flavors": [
         {
-          "flavor": "Pipe Tobacco"
+          "flavor": "Pipe tobacco",
+          "color": "0xFFA49663"
         },
         {
-          "flavor": "Tobacco"
+          "flavor": "Tobacco",
+          "color": "0xFFCFB480"
         },
         {
           "flavor": "Burnt",
-          "children": [
+          "color": "0xFFB6804D",
+          "flavors": [
             {
-              "flavor": "Acrid"
+              "flavor": "Acrid",
+              "color": "0xFFB0A068"
             },
             {
-              "flavor": "Ashy"
+              "flavor": "Ashy",
+              "color": "0xFF94A993"
             },
             {
-              "flavor": "Smoky"
+              "flavor": "Smoky",
+              "color": "0xFFA97F34"
             },
             {
-              "flavor": "Brown, Roast"
+              "flavor": "Brown, roast",
+              "color": "0xFF835621"
             }
           ]
         },
         {
           "flavor": "Cereal",
-          "children": [
+          "color": "0xFFE4BD2D",
+          "flavors": [
             {
-              "flavor": "Malt"
+              "flavor": "Grain",
+              "color": "0xFFD0A588"
             },
             {
-              "flavor": "Grain"
+              "flavor": "Malt",
+              "color": "0xFFEC9B65"
             }
           ]
         }
@@ -61,57 +73,73 @@
     },
     {
       "flavor": "Spices",
-      "children": [
+      "color": "0xFFB90D41",
+      "flavors": [
         {
-          "flavor": "Pungent"
+          "flavor": "Pungent",
+          "color": "0xFF734864"
         },
         {
-          "flavor": "Pepper"
+          "flavor": "Pepper",
+          "color": "0xFF734864"
         },
         {
-          "flavor": "Brown Spice",
-          "children": [
+          "flavor": "Brown spice",
+          "color": "0xFFBE404C",
+          "flavors": [
             {
-              "flavor": "Anise"
+              "flavor": "Anise",
+              "color": "0xFFC99F19"
             },
             {
-              "flavor": "Nutmeg"
+              "flavor": "Nutmeg",
+              "color": "0xFFA61619"
             },
             {
-              "flavor": "Cinnamon"
+              "flavor": "Cinnamon",
+              "color": "0xFFE6922F"
             },
             {
-              "flavor": "Clove"
+              "flavor": "Clove",
+              "color": "0xFFB5796E"
             }
           ]
         }
       ]
     },
     {
-      "flavor": "Nutty/Cocoa",
-      "children": [
+      "flavor": "Nutty/cocoa",
+      "color": "0xFF9A7B79",
+      "flavors": [
         {
           "flavor": "Nutty",
-          "children": [
+          "color": "0xFFB59287",
+          "flavors": [
             {
-              "flavor": "Peanuts"
+              "flavor": "Peanuts",
+              "color": "0xFFE4B509"
             },
             {
-              "flavor": "Hazelnut"
+              "flavor": "Hazelnut",
+              "color": "0xFF935F21"
             },
             {
-              "flavor": "Almond"
+              "flavor": "Almond",
+              "color": "0xFFD9A99C"
             }
           ]
         },
         {
           "flavor": "Cocoa",
-          "children": [
+          "color": "0xFFB37122",
+          "flavors": [
             {
-              "flavor": "Chocolate"
+              "flavor": "Chocolate",
+              "color": "0xFF6B271F"
             },
             {
-              "flavor": "Dark Chocolate"
+              "flavor": "Dark chocolate",
+              "color": "0xFF4A271D"
             }
           ]
         }
@@ -119,55 +147,71 @@
     },
     {
       "flavor": "Sweet",
-      "children": [
+      "color": "0xFFF36421",
+      "flavors": [
         {
-          "flavor": "Brown Sugar",
-          "children": [
+          "flavor": "Brown sugar",
+          "color": "0xFFCE7C92",
+          "flavors": [
             {
-              "flavor": "Molasses"
+              "flavor": "Molasses",
+              "color": "0xFF230007"
             },
             {
-              "flavor": "Maple Syrup"
+              "flavor": "Maple syrup",
+              "color": "0xFFD85E25"
             },
             {
-              "flavor": "Carmelized"
+              "flavor": "Caramelized",
+              "color": "0xFFE2A227"
             },
             {
-              "flavor": "Honey"
+              "flavor": "Honey",
+              "color": "0xFFF47E2A"
             }
           ]
         },
         {
-          "flavor": "Vanilla"
+          "flavor": "Vanilla",
+          "color": "0xFFF6997D"
         },
         {
-          "flavor": "Vanillin"
+          "flavor": "Vanillin",
+          "color": "0xFFF38088"
         },
         {
-          "flavor": "Overall Sweet"
+          "flavor": "Overall sweet",
+          "color": "0xFFDE707A"
         },
         {
-          "flavor": "Sweet Aromatics"
+          "flavor": "Sweet aromatics",
+          "color": "0xFFCE3E6C"
         }
       ]
     },
     {
       "flavor": "Floral",
-      "children": [
+      "color": "0xFFEC008C",
+      "flavors": [
         {
-          "flavor": "Black Tea"
+          "flavor": "Black tea",
+          "color": "0xFFAE667D"
         },
         {
           "flavor": "Floral",
-          "children": [
+          "color": "0xFFF05794",
+          "flavors": [
             {
-              "flavor": "Chamomile"
+              "flavor": "Chamomile",
+              "color": "0xFFFBAF25"
             },
             {
-              "flavor": "Rose"
+              "flavor": "Rose",
+              "color": "0xFFE472A7"
             },
             {
-              "flavor": "Jasmine"
+              "flavor": "Jasmine",
+              "color": "0xFFF8F7E5"
             }
           ]
         }
@@ -175,226 +219,293 @@
     },
     {
       "flavor": "Fruity",
-      "children": [
+      "color": "0xFFEE1D23",
+      "flavors": [
         {
           "flavor": "Berry",
-          "children": [
+          "color": "0xFFED2C4B",
+          "flavors": [
             {
-              "flavor": "Blackberry"
+              "flavor": "Blackberry",
+              "color": "0xFF090819"
             },
             {
-              "flavor": "Raspberry"
+              "flavor": "Raspberry",
+              "color": "0xFFE32487"
             },
             {
-              "flavor": "Blueberry"
+              "flavor": "Blueberry",
+              "color": "0xFF666AAC"
             },
             {
-              "flavor": "Strawberry"
+              "flavor": "Strawberry",
+              "color": "0xFFEE293B"
             }
           ]
         },
         {
-          "flavor": "Dried Fruit",
-          "children": [
+          "flavor": "Dried fruit",
+          "color": "0xFFD7444F",
+          "flavors": [
             {
-              "flavor": "Raisin"
+              "flavor": "Raisin",
+              "color": "0xFF9E1E79"
             },
             {
-              "flavor": "Prune"
+              "flavor": "Prune",
+              "color": "0xFF85558F"
             }
           ]
         },
         {
-          "flavor": "Other Fruit",
-          "children": [
+          "flavor": "Other fruit",
+          "color": "0xFFF26648",
+          "flavors": [
             {
-              "flavor": "Coconut"
+              "flavor": "Coconut",
+              "color": "0xFFE48E2A"
             },
             {
-              "flavor": "Cherry"
+              "flavor": "Cherry",
+              "color": "0xFFE71158"
             },
             {
-              "flavor": "Pomegranate"
+              "flavor": "Pomegranate",
+              "color": "0xFFEF4B60"
             },
             {
-              "flavor": "Pineapple"
+              "flavor": "Pineapple",
+              "color": "0xFFF89D1C"
             },
             {
-              "flavor": "Grape"
+              "flavor": "Grape",
+              "color": "0xFF9EC536"
             },
             {
-              "flavor": "Apple"
+              "flavor": "Apple",
+              "color": "0xFF69C071"
             },
             {
-              "flavor": "Peach"
+              "flavor": "Peach",
+              "color": "0xFFF37F51"
             },
             {
-              "flavor": "Pear"
+              "flavor": "Pear",
+              "color": "0xFFB2AA1E"
             }
           ]
         },
         {
-          "flavor": "Citrus Fruit",
-          "children": [
+          "flavor": "Citrus fruit",
+          "color": "0xFFFCB914",
+          "flavors": [
             {
-              "flavor": "Grapefruit"
+              "flavor": "Grapefruit",
+              "color": "0xFFF05A5E"
             },
             {
-              "flavor": "Orange"
+              "flavor": "Orange",
+              "color": "0xFFF47921"
             },
             {
-              "flavor": "Lemon"
+              "flavor": "Lemon",
+              "color": "0xFFF5DA02"
             },
             {
-              "flavor": "Lime"
+              "flavor": "Lime",
+              "color": "0xFF91C355"
             }
           ]
         }
       ]
     },
     {
-      "flavor": "Sour/Fermented",
-      "children": [
+      "flavor": "Sour/fermented",
+      "color": "0xFFF5CE02",
+      "flavors": [
         {
           "flavor": "Sour",
-          "children": [
+          "color": "0xFFE2D925",
+          "flavors": [
             {
-              "flavor": "Sour Aromatics"
+              "flavor": "Sour aromatics",
+              "color": "0xFFC0BD1E"
             },
             {
-              "flavor": "Acetic Acid"
+              "flavor": "Acetic acid",
+              "color": "0xFF9FC78A"
             },
             {
-              "flavor": "Butyric Acid"
+              "flavor": "Butyric acid",
+              "color": "0xFFD6C509"
             },
             {
-              "flavor": "Isovaleric Acid"
+              "flavor": "Isovaleric acid",
+              "color": "0xFF71C05A"
             },
             {
-              "flavor": "Citric Acid"
+              "flavor": "Citric acid",
+              "color": "0xFFE4D711"
             },
             {
-              "flavor": "Malic Acid"
+              "flavor": "Malic acid",
+              "color": "0xFFB4C425"
             }
           ]
         },
         {
-          "flavor": "Alcohol/Fermented",
-          "children": [
+          "flavor": "Alcohol/fermented",
+          "color": "0xFFB2A113",
+          "flavors": [
             {
-              "flavor": "Winey"
+              "flavor": "Winey",
+              "color": "0xFFA50A71"
             },
             {
-              "flavor": "Whiskey"
+              "flavor": "Whiskey",
+              "color": "0xFFB03A53"
             },
             {
-              "flavor": "Fermented"
+              "flavor": "Fermented",
+              "color": "0xFFD2A808"
             },
             {
-              "flavor": "Overripe"
+              "flavor": "Overripe",
+              "color": "0xFF7E7029"
             }
           ]
         }
       ]
     },
     {
-      "flavor": "Green/Vegetative",
-      "children": [
+      "flavor": "Green/vegetative",
+      "color": "0xFF17803B",
+      "flavors": [
         {
-          "flavor": "Olive Oil"
+          "flavor": "Olive oil",
+          "color": "0xFFA0B127"
         },
         {
-          "flavor": "Raw"
+          "flavor": "Raw",
+          "color": "0xFF6C8C39"
         },
         {
-          "flavor": "Green/Vegetative",
-          "children": [
+          "flavor": "Green/vegetative",
+          "color": "0xFF21B252",
+          "flavors": [
             {
-              "flavor": "Under-Ripe"
+              "flavor": "Under-ripe",
+              "color": "0xFFAACA47"
             },
             {
-              "flavor": "Peapod"
+              "flavor": "Peapod",
+              "color": "0xFF47B44A"
             },
             {
-              "flavor": "Fresh"
+              "flavor": "Fresh",
+              "color": "0xFF00AB6F"
             },
             {
-              "flavor": "Dark Green"
+              "flavor": "Dark green",
+              "color": "0xFF00603D"
             },
             {
-              "flavor": "Vegetative"
+              "flavor": "Vegetative",
+              "color": "0xFF1EB26A"
             },
             {
-              "flavor": "Hay-Like"
+              "flavor": "Hay-like",
+              "color": "0xFF9FA122"
             },
             {
-              "flavor": "Herb-Like"
+              "flavor": "Herb-like",
+              "color": "0xFF79C359"
             }
           ]
         },
         {
-          "flavor": "Beany"
+          "flavor": "Beany",
+          "color": "0xFF6F9F95"
         }
       ]
     },
     {
       "flavor": "Other",
-      "children": [
+      "color": "0xFF00A7D2",
+      "flavors": [
         {
-          "flavor": "Paper/Musty",
-          "children": [
+          "flavor": "Chemical",
+          "color": "0xFF61C6DD",
+          "flavors": [
             {
-              "flavor": "Stale"
+              "flavor": "Bitter",
+              "color": "0xFF6FC9BF"
             },
             {
-              "flavor": "Cardboard"
+              "flavor": "Salty",
+              "color": "0xFFCED2CA"
             },
             {
-              "flavor": "Papery"
+              "flavor": "Medicinal",
+              "color": "0xFF61A8C4"
             },
             {
-              "flavor": "Woody"
+              "flavor": "Petroleum",
+              "color": "0xFF00A9C1"
             },
             {
-              "flavor": "Moldy/Damp"
+              "flavor": "Skunky",
+              "color": "0xFF5C8296"
             },
             {
-              "flavor": "Musty/Dusty"
-            },
-            {
-              "flavor": "Musty/Earthy"
-            },
-            {
-              "flavor": "Animalic"
-            },
-            {
-              "flavor": "Meaty Brothy"
-            },
-            {
-              "flavor": "Phenolic"
+              "flavor": "Rubber",
+              "color": "0xFF001631"
             }
           ]
         },
         {
-          "flavor": "Chemical",
-          "children": [
+          "flavor": "Papery/musty",
+          "color": "0xFF9BBCCC",
+          "flavors": [
             {
-              "flavor": "Bitter"
+              "flavor": "Stale",
+              "color": "0xFF657D6B"
             },
             {
-              "flavor": "Salty"
+              "flavor": "Cardboard",
+              "color": "0xFFDAC346"
             },
             {
-              "flavor": "Medicinal"
+              "flavor": "Papery",
+              "color": "0xFFFFFFFF"
             },
             {
-              "flavor": "Petroleum"
+              "flavor": "Woody",
+              "color": "0xFF725C26"
             },
             {
-              "flavor": "Skunky"
+              "flavor": "Moldy/damp",
+              "color": "0xFFA1AC74"
             },
             {
-              "flavor": "Rubber"
+              "flavor": "Musty/dusty",
+              "color": "0xFFCAA669"
+            },
+            {
+              "flavor": "Musty/earthy",
+              "color": "0xFF948547"
+            },
+            {
+              "flavor": "Animalic",
+              "color": "0xFFA0A277"
+            },
+            {
+              "flavor": "Meaty brothy",
+              "color": "0xFFCB817A"
+            },
+            {
+              "flavor": "Phenolic",
+              "color": "0xFFE97E89"
             }
           ]
         }

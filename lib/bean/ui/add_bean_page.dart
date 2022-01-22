@@ -1,29 +1,31 @@
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/bean/cubit.dart';
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/roast.dart';
-import 'package:coffea/bean/state.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/roast.dart';
+import 'package:coffea/bean/use_case/add_bean.dart';
+import 'package:coffea/bean/use_case/find_flavors.dart';
+import 'package:coffea/bean/use_case/find_roasts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class AddBeanRoute extends StatefulWidget {
-  const AddBeanRoute({Key? key}) : super(key: key);
+class AddBeanPage extends StatefulWidget {
+  const AddBeanPage({Key? key}) : super(key: key);
 
   @override
-  AddBeanRouteState createState() => AddBeanRouteState();
+  AddBeanPageState createState() => AddBeanPageState();
 }
 
-class AddBeanRouteState extends State<AddBeanRoute> {
-  final beanCubit = Modular.get<BeanCubit>();
+class AddBeanPageState extends State<AddBeanPage> {
+  final addBean = Modular.get<AddBean>();
+  final findFlavors = Modular.get<FindFlavors>();
+  final findRoasts = Modular.get<FindRoasts>();
   final _formData = _AddBeanFormData(GlobalKey<FormState>());
 
   @override
   void initState() {
     super.initState();
-    beanCubit
-      ..getFlavors()
-      ..getRoasts();
+    findFlavors.findAll();
+    findRoasts.findAll();
   }
 
   @override
@@ -60,18 +62,17 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                   return null;
                 },
               ),
-              BlocBuilder<BeanCubit, BeanState>(
-                bloc: beanCubit,
-                buildWhen: (context, state) => state is GetRoastsState,
+              BlocBuilder<FindRoasts, FindRoastsState>(
+                bloc: findRoasts,
                 builder: (context, state) {
                   return DropdownButtonFormField<Roast>(
                     hint: const Text("Roast"),
-                    value: _formData.selectedRoast,
+                    value: _formData.beanRoast,
                     onChanged: (roast) {
-                      setState(() => _formData.selectedRoast = roast);
+                      setState(() => _formData.beanRoast = roast);
                     },
-                    items: state is GetRoastsState
-                        ? state.data
+                    items: state is RoastsFound
+                        ? state.roasts
                             .map(
                               (roast) => DropdownMenuItem(
                                 value: roast,
@@ -83,17 +84,36 @@ class AddBeanRouteState extends State<AddBeanRoute> {
                   );
                 },
               ),
-              BlocBuilder<BeanCubit, BeanState>(
-                bloc: beanCubit,
-                buildWhen: (_, current) => current is GetFlavorsState,
-                builder: (context, state) {},
+              Wrap(
+                children: _formData.beanFlavors.map<Widget>(
+                  (e) {
+                    return Chip(
+                      label: Text(e.name),
+                      backgroundColor: e.color,
+                      onDeleted: () {
+                        setState(() => _formData.beanFlavors.remove(e));
+                      },
+                    );
+                  },
+                ).toList()
+                  ..add(
+                    ActionChip(
+                      label: const Icon(Icons.add),
+                      onPressed: () => Modular.to
+                          .pushNamed(
+                            '/flavors',
+                            arguments: _formData.beanFlavors,
+                          )
+                          .then((_) => setState(() {})),
+                    ),
+                  ),
               ),
               ElevatedButton(
                 onPressed: () {
                   if (_formData.isValid) {
                     final newBean = _formData.createBean();
-                    beanCubit.addBean(newBean);
-                    Modular.to.navigate('/beans');
+                    addBean.add(newBean);
+                    Modular.to.pop();
                   }
                 },
                 child: const Text('Submit'),
@@ -106,30 +126,25 @@ class AddBeanRouteState extends State<AddBeanRoute> {
   }
 }
 
-Map<String, dynamic> displayEntry(Flavor flavor) {
-  return {"display": flavor.name, "value": flavor};
-}
-
 class _AddBeanFormData {
   GlobalKey<FormState> formKey;
-  late String beanName;
-  late String beanBrand;
-  late Roast beanRoast;
-  late List<Flavor> beanFlavors;
-
-  Roast? selectedRoast;
-  List<Flavor> selectedFlavors = <Flavor>[];
+  String? beanName;
+  String? beanBrand;
+  Roast? beanRoast;
+  List<Flavor> beanFlavors = [];
 
   _AddBeanFormData(this.formKey);
 
-  bool get isValid => formKey.currentState!.validate();
+  bool get isValid => formKey.currentState?.validate() ?? false;
 
   Bean createBean() {
+    assert(beanName != null);
+
     return Bean(
-      beanName,
+      beanName!,
       brand: beanBrand,
       flavors: beanFlavors,
-      roast: selectedRoast,
+      roast: beanRoast,
     );
   }
 }

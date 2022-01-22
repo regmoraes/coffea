@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/grind_size.dart';
-import 'package:coffea/bean/roast.dart';
-import 'package:coffea/domain/method.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/grind_size.dart';
+import 'package:coffea/bean/model/roast.dart';
+import 'package:coffea/method/method.dart';
 
 void main() async {
   const json = r'''
@@ -421,10 +421,9 @@ void main() async {
     );
   }
 
-  Future<List<GrindSize>> getGrindSizes() async {
-    return List<GrindSize>.from(
-      _coffeaData["grind_sizes"]
-          .map((grindSize) => GrindSize.fromJson(grindSize)),
+  Future<List<Size>> getGrindSizes() async {
+    return List<Size>.from(
+      _coffeaData["grind_sizes"].map((grindSize) => Size.fromJson(grindSize)),
     );
   }
 

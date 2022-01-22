@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/roast.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/roast.dart';
 import 'package:flutter/services.dart';
 
 class BeanRepository {
@@ -28,29 +28,15 @@ class BeanRepository {
     );
   }
 
-  Future<List<Flavor>> getFlavors({bool flatten = false}) async {
-    final flavors = List<Flavor>.from(
+  Future<Set<Flavor>> getFlavors() async {
+    return Set<Flavor>.from(
       _coffeaData["flavors"].map((flavorJson) => Flavor.fromJson(flavorJson)),
     );
-
-    if (flatten) {
-      return flattenDeep(flavors);
-    } else {
-      return flavors;
-    }
   }
 
-  Future<List<Roast>> getRoasts() async {
-    return List<Roast>.from(
+  Future<Set<Roast>> getRoasts() async {
+    return Set<Roast>.from(
       _coffeaData["roasts"].map((roast) => Roast.fromJson(roast)),
     );
   }
-
-  List<Flavor> flattenDeep(Iterable<Flavor> flavors) => [
-        for (var flavor in flavors)
-          if (flavor.flavors?.isNotEmpty == true)
-            ...flattenDeep(flavor.flavors!)
-          else
-            flavor
-      ];
 }

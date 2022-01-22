@@ -1,27 +1,24 @@
-import 'package:coffea/bean/cubit.dart';
-import 'package:coffea/bean/module.dart';
-import 'package:coffea/bean/state.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BeansRoute extends StatelessWidget {
-  const BeansRoute({Key? key}) : super(key: key);
+class BeansPage extends StatelessWidget {
+  const BeansPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final beanCubit = Modular.get<BeanCubit>();
+    final findBeans = Modular.get<FindBeans>();
 
     return Scaffold(
-      body: BlocBuilder<BeanCubit, BeanState>(
-        bloc: beanCubit,
+      body: BlocBuilder<FindBeans, FindBeansState>(
+        bloc: findBeans,
         builder: (context, state) {
-          if (state is GetBeansState && state.hasData) {
+          if (state is BeansFound) {
             return ListView.builder(
-              itemCount: state.data.length,
+              itemCount: state.beans.length,
               itemBuilder: (context, index) {
-                final bean = state.data.elementAt(index);
+                final bean = state.beans.elementAt(index);
                 return ListTile(title: Text(bean.name));
               },
             );
@@ -33,7 +30,8 @@ class BeansRoute extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          Modular.to.pushNamed(addBeanRouteName);
+          await Modular.to.pushNamed('/add-bean');
+          findBeans.findAll();
         },
       ),
     );

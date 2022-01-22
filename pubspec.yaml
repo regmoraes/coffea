@@ -1,5 +1,5 @@
 name: coffea
-description: Create  and manage your brews
+description: Create and manage your brews
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -12,7 +12,7 @@ dependencies:
   equatable: ^2.0.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^8.0.0
   flutter_modular: ^4.1.2
   multiselect_formfield: ^0.1.6
   provider: ^6.0.0
