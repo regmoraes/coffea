@@ -1,5 +1,5 @@
 import 'package:coffea/bean/model/flavor.dart';
-import 'package:coffea/bean/repository.dart';
+import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FindFlavors extends Cubit<FindFlavorsState> {

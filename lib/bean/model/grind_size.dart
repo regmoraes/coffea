@@ -1,7 +1,7 @@
-class Size {
+class GrindSize {
   final String size;
 
-  Size(this.size);
+  GrindSize(this.size);
 
-  factory Size.fromJson(dynamic value) => Size(value as String);
+  factory GrindSize.fromJson(dynamic value) => GrindSize(value as String);
 }

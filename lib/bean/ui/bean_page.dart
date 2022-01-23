@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BeansRoute extends StatelessWidget {
-  const BeansRoute({Key? key}) : super(key: key);
+class BeanPage extends StatelessWidget {
+  const BeanPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

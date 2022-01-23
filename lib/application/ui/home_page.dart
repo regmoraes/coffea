@@ -5,14 +5,14 @@ const beansPageIndex = 0;
 const recipesPageIndex = 1;
 const experimentsPageIndex = 2;
 
-class HomeRoute extends StatefulWidget {
-  const HomeRoute({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomeRouteState createState() => _HomeRouteState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeRouteState extends State<HomeRoute> {
+class _HomePageState extends State<HomePage> {
   var _currentNavBarItemIndex = beansPageIndex;
 
   @override
