@@ -1,5 +1,4 @@
 import 'package:coffea/bean/model/bean.dart';
-import 'package:coffea/bean/model/grind_size.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:coffea/method/model/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
@@ -23,6 +22,8 @@ class AddRecipePageState extends State<AddRecipePage> {
   final findMethods = Modular.get<FindMethods>();
   final findBeans = Modular.get<FindBeans>();
   final _formData = _AddRecipeFormData(GlobalKey<FormState>());
+  late final TextEditingController _beanQuantityController;
+  late final TextEditingController _waterQuantityController;
 
   @override
   void initState() {
@@ -32,6 +33,14 @@ class AddRecipePageState extends State<AddRecipePage> {
     }
     findMethods.findAll();
     findBeans.findAll();
+
+    _beanQuantityController = TextEditingController(
+      text: '${_formData.recipeBuilder.ratio.beanQuantity}',
+    );
+
+    _waterQuantityController = TextEditingController(
+      text: '${_formData.recipeBuilder.ratio.waterQuantity}',
+    );
   }
 
   @override
@@ -49,9 +58,13 @@ class AddRecipePageState extends State<AddRecipePage> {
                 builder: (context, state) {
                   return DropdownButtonFormField<Method>(
                     hint: const Text("Method"),
-                    value: _formData.method,
+                    value: _formData.recipeBuilder.method,
                     onChanged: (method) {
-                      setState(() => _formData.method = method);
+                      setState(() {
+                        if (method != null) {
+                          _formData.recipeBuilder.method;
+                        }
+                      });
                     },
                     items: state is MethodsFound
                         ? state.methods
@@ -71,9 +84,15 @@ class AddRecipePageState extends State<AddRecipePage> {
                 builder: (context, state) {
                   return DropdownButtonFormField<Bean>(
                     hint: const Text("Bean"),
-                    value: _formData.bean,
+                    value: _formData.recipeBuilder.bean,
                     onChanged: (bean) {
-                      setState(() => _formData.bean = bean);
+                      setState(
+                        () {
+                          if (bean != null) {
+                            _formData.recipeBuilder.bean = bean;
+                          }
+                        },
+                      );
                     },
                     items: state is BeansFound
                         ? state.beans
@@ -89,10 +108,17 @@ class AddRecipePageState extends State<AddRecipePage> {
                 },
               ),
               TextFormField(
+                controller: _waterQuantityController,
                 decoration: const InputDecoration(
-                    border: UnderlineInputBorder(), labelText: 'Water'),
-                onChanged: (text) =>
-                    _formData.waterQuantity = double.parse(text),
+                  border: UnderlineInputBorder(),
+                  labelText: 'Water',
+                ),
+                onChanged: (text) {
+                  setState(() {
+                    _formData.recipeBuilder.ratio.waterQuantity =
+                        double.parse(text);
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Water must not be empty';
@@ -101,10 +127,17 @@ class AddRecipePageState extends State<AddRecipePage> {
                 },
               ),
               TextFormField(
+                controller: _beanQuantityController,
                 decoration: const InputDecoration(
-                    border: UnderlineInputBorder(), labelText: 'Bean'),
-                onChanged: (text) =>
-                    _formData.beanQuantity = double.parse(text),
+                  border: UnderlineInputBorder(),
+                  labelText: 'Bean',
+                ),
+                onChanged: (text) {
+                  setState(() {
+                    _formData.recipeBuilder.ratio.beanQuantity =
+                        double.parse(text);
+                  });
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Bean must not be empty';
@@ -112,10 +145,24 @@ class AddRecipePageState extends State<AddRecipePage> {
                   return null;
                 },
               ),
+              const Text('Ratio'),
+              Slider(
+                value: _formData.recipeBuilder.ratio.value,
+                min: 10,
+                max: 40,
+                divisions: 60,
+                label: _formData.recipeBuilder.ratio.formattedValue,
+                onChanged: (double value) {
+                  setState(() {
+                    _formData.recipeBuilder.ratio.value = value;
+                    print(value);
+                  });
+                },
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (_formData.isValid) {
-                    final newRecipe = _formData.createRecipe();
+                    final newRecipe = _formData.recipeBuilder.build();
                     addRecipe.add(newRecipe);
                     Modular.to.pop();
                   }
@@ -132,24 +179,9 @@ class AddRecipePageState extends State<AddRecipePage> {
 
 class _AddRecipeFormData {
   GlobalKey<FormState> formKey;
-  Method? method;
-  Bean? bean;
-  double? beanQuantity;
-  double? waterQuantity;
-  String? comments;
+  RecipeBuilder recipeBuilder = RecipeBuilder();
 
   _AddRecipeFormData(this.formKey);
 
   bool get isValid => formKey.currentState?.validate() ?? false;
-
-  Recipe createRecipe() {
-    assert(method != null && bean != null);
-
-    return Recipe(
-      method: method!,
-      bean: bean!,
-      grindSize: GrindSize('Medium Fine'),
-      steps: List.empty(),
-    );
-  }
 }

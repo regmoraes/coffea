@@ -29,7 +29,7 @@ class RecipesPage extends StatelessWidget {
                 final recipe = state.recipes[index];
                 return ListTile(
                   leading: Text(recipe.method.name),
-                  title: Text(recipe.ratio.value),
+                  title: Text(recipe.ratio.formattedValue),
                   trailing: Text('${recipe.totalDuration}'),
                 );
               },

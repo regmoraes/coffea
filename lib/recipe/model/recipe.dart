@@ -11,34 +11,42 @@ class Recipe {
   final Method method;
   final Bean bean;
   final GrindSize grindSize;
+  final Ratio ratio;
   final List<Step> steps;
   final String? comments;
 
   late final Duration totalDuration;
-  late Ratio ratio;
 
   Recipe({
     required this.method,
     required this.bean,
     required this.grindSize,
+    required this.ratio,
     required this.steps,
-    this.comments,
+    required this.comments,
   }) {
     totalDuration = steps
         .map((step) => step.duration)
         .reduce((totalDuration, duration) => totalDuration + duration);
-
-    ratio = Ratio(
-      beanQuantity: defaultBeanQuantity,
-      waterQuantity: defaultWaterQuantity,
-    );
   }
+}
 
-  set waterQuantity(quantity) {
-    ratio.waterQuantity = quantity;
-  }
+class RecipeBuilder {
+  Method? method;
+  Bean? bean;
+  GrindSize? grindSize;
+  List<Step>? steps;
+  String? comments;
 
-  set beanQuantity(quantity) {
-    ratio.beanQuantity = quantity;
+  final Ratio ratio = Ratio();
+
+  Recipe build() {
+    return Recipe(
+        method: method!,
+        bean: bean!,
+        grindSize: grindSize!,
+        steps: steps!,
+        comments: comments,
+        ratio: ratio);
   }
 }
