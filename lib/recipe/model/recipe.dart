@@ -4,14 +4,11 @@ import 'package:coffea/method/model/method.dart';
 import 'package:coffea/recipe/model/ratio.dart';
 import 'package:coffea/recipe/model/step.dart';
 
-const defaultWaterQuantity = 100.0;
-const defaultBeanQuantity = 10.0;
-
 class Recipe {
   final Method method;
   final Bean bean;
   final GrindSize grindSize;
-  final Ratio ratio;
+  final BeanWaterRatio ratio;
   final List<Step> steps;
   final String? comments;
 
@@ -38,15 +35,16 @@ class RecipeBuilder {
   List<Step>? steps;
   String? comments;
 
-  final Ratio ratio = Ratio();
+  final BeanWaterRatio ratio = BeanWaterRatio();
 
   Recipe build() {
     return Recipe(
-        method: method!,
-        bean: bean!,
-        grindSize: grindSize!,
-        steps: steps!,
-        comments: comments,
-        ratio: ratio);
+      method: method!,
+      bean: bean!,
+      grindSize: grindSize!,
+      steps: steps!,
+      comments: comments,
+      ratio: ratio,
+    );
   }
 }

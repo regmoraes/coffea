@@ -1,43 +1,58 @@
-import 'package:coffea/recipe/model/recipe.dart';
+const minRatio = 1;
+const maxRatio = 20;
 
-// class Ratio {
-//   double value = 10.0;
-//
-//   String get formattedValue => '1:$value';
-// }
-//
-class Ratio {
+const minBeanQuantity = 0.75;
+const maxBeanQuantity = 1000.0;
+
+const minWaterQuantity = 15.0;
+const maxWaterQuantity = 1000.0;
+
+const defaultWaterQuantity = 100.0;
+const defaultBeanQuantity = 10.0;
+
+class BeanWaterRatio {
   double _waterQuantity = defaultWaterQuantity;
   double _beanQuantity = defaultBeanQuantity;
   late double _value;
 
-  Ratio() {
+  BeanWaterRatio() {
     _value = _waterQuantity / _beanQuantity;
   }
 
-  set value(double quantity) {
+  set ratio(double quantity) {
     _value = quantity;
-    _beanQuantity = (_waterQuantity / _value).roundToDouble();
-    print(this);
+    _beanQuantity = (_waterQuantity / _value);
   }
 
   set beanQuantity(double quantity) {
     _beanQuantity = quantity;
-    _value = _waterQuantity / _beanQuantity;
-    print(this);
+
+    if (ratio > maxRatio) {
+      _waterQuantity = _beanQuantity * maxRatio;
+    } else if (ratio < minRatio) {
+      _waterQuantity = _beanQuantity * minRatio;
+    } else {
+      _value = ratio;
+    }
   }
 
   set waterQuantity(double quantity) {
     _waterQuantity = quantity;
-    _beanQuantity = _waterQuantity / _value;
-    print(this);
+
+    if (ratio > maxRatio) {
+      _beanQuantity = _waterQuantity / maxRatio;
+    } else if (ratio < minRatio) {
+      _beanQuantity = _waterQuantity / minRatio;
+    } else {
+      _value = ratio;
+    }
   }
 
   double get beanQuantity => _beanQuantity;
 
   double get waterQuantity => _waterQuantity;
 
-  double get value => _waterQuantity / _beanQuantity;
+  double get ratio => _waterQuantity / _beanQuantity;
 
   String get formattedValue => '1:${_value.toStringAsFixed(1)}';
 

@@ -5,6 +5,7 @@ import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/model/recipe.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -45,6 +46,7 @@ class AddRecipePageState extends State<AddRecipePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_formData.recipeBuilder.ratio);
     return Scaffold(
       appBar: AppBar(title: const Text("New Recipe")),
       body: Container(
@@ -68,13 +70,13 @@ class AddRecipePageState extends State<AddRecipePage> {
                     },
                     items: state is MethodsFound
                         ? state.methods
-                            .map(
-                              (method) => DropdownMenuItem(
-                                value: method,
-                                child: Text(method.name),
-                              ),
-                            )
-                            .toList()
+                        .map(
+                          (method) => DropdownMenuItem(
+                        value: method,
+                        child: Text(method.name),
+                      ),
+                    )
+                        .toList()
                         : List.empty(),
                   );
                 },
@@ -87,7 +89,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                     value: _formData.recipeBuilder.bean,
                     onChanged: (bean) {
                       setState(
-                        () {
+                            () {
                           if (bean != null) {
                             _formData.recipeBuilder.bean = bean;
                           }
@@ -96,13 +98,13 @@ class AddRecipePageState extends State<AddRecipePage> {
                     },
                     items: state is BeansFound
                         ? state.beans
-                            .map(
-                              (method) => DropdownMenuItem(
-                                value: method,
-                                child: Text(method.name),
-                              ),
-                            )
-                            .toList()
+                        .map(
+                          (method) => DropdownMenuItem(
+                        value: method,
+                        child: Text(method.name),
+                      ),
+                    )
+                        .toList()
                         : List.empty(),
                   );
                 },
@@ -113,6 +115,8 @@ class AddRecipePageState extends State<AddRecipePage> {
                   border: UnderlineInputBorder(),
                   labelText: 'Water',
                 ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (text) {
                   setState(() {
                     _formData.recipeBuilder.ratio.waterQuantity =
@@ -127,6 +131,8 @@ class AddRecipePageState extends State<AddRecipePage> {
                 },
               ),
               TextFormField(
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 controller: _beanQuantityController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -147,15 +153,14 @@ class AddRecipePageState extends State<AddRecipePage> {
               ),
               const Text('Ratio'),
               Slider(
-                value: _formData.recipeBuilder.ratio.value,
-                min: 10,
-                max: 40,
-                divisions: 60,
+                value: _formData.recipeBuilder.ratio.ratio,
+                min: 1,
+                max: 36,
+                divisions: 35,
                 label: _formData.recipeBuilder.ratio.formattedValue,
                 onChanged: (double value) {
                   setState(() {
-                    _formData.recipeBuilder.ratio.value = value;
-                    print(value);
+                    _formData.recipeBuilder.ratio.ratio = value;
                   });
                 },
               ),
