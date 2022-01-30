@@ -1,5 +1,5 @@
-import 'package:coffea/bean/model/roast.dart';
 import 'package:coffea/bean/repository/local_repository.dart';
+import 'package:coffea/bean/roast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FindRoasts extends Cubit<FindRoastsState> {

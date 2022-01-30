@@ -1,5 +1,5 @@
 import 'package:coffea/application/repository.dart';
-import 'package:coffea/method/model/method.dart';
+import 'package:coffea/method/method.dart';
 
 class MethodRepository {
   Future<Set<Method>> findAll() async {

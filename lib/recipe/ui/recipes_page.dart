@@ -1,4 +1,4 @@
-import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/bean.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +29,7 @@ class RecipesPage extends StatelessWidget {
                 final recipe = state.recipes[index];
                 return ListTile(
                   leading: Text(recipe.method.name),
-                  title: Text(recipe.ratio.formattedValue),
+                  title: Text(recipe.ratio.ratioFormatted),
                   trailing: Text('${recipe.totalDuration}'),
                 );
               },

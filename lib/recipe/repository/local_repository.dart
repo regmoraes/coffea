@@ -1,4 +1,4 @@
-import 'package:coffea/recipe/model/recipe.dart';
+import 'package:coffea/recipe/recipe.dart';
 
 final _recipes = List<Recipe>.empty();
 

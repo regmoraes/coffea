@@ -1,11 +1,10 @@
-import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
-import 'package:coffea/method/model/method.dart';
+import 'package:coffea/method/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
-import 'package:coffea/recipe/model/recipe.dart';
+import 'package:coffea/recipe/recipe.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -23,8 +22,14 @@ class AddRecipePageState extends State<AddRecipePage> {
   final findMethods = Modular.get<FindMethods>();
   final findBeans = Modular.get<FindBeans>();
   final _formData = _AddRecipeFormData(GlobalKey<FormState>());
-  late final TextEditingController _beanQuantityController;
-  late final TextEditingController _waterQuantityController;
+  late final TextEditingController _beanQuantityController =
+      TextEditingController(
+    text: '${_formData.recipeBuilder.ratio.beanQuantity}',
+  );
+  late final TextEditingController _waterQuantityController =
+      TextEditingController(
+    text: '${_formData.recipeBuilder.ratio.waterQuantity}',
+  );
 
   @override
   void initState() {
@@ -35,13 +40,7 @@ class AddRecipePageState extends State<AddRecipePage> {
     findMethods.findAll();
     findBeans.findAll();
 
-    _beanQuantityController = TextEditingController(
-      text: '${_formData.recipeBuilder.ratio.beanQuantity}',
-    );
-
-    _waterQuantityController = TextEditingController(
-      text: '${_formData.recipeBuilder.ratio.waterQuantity}',
-    );
+    // _beanQuantityController =
   }
 
   @override
@@ -70,13 +69,13 @@ class AddRecipePageState extends State<AddRecipePage> {
                     },
                     items: state is MethodsFound
                         ? state.methods
-                        .map(
-                          (method) => DropdownMenuItem(
-                        value: method,
-                        child: Text(method.name),
-                      ),
-                    )
-                        .toList()
+                            .map(
+                              (method) => DropdownMenuItem(
+                                value: method,
+                                child: Text(method.name),
+                              ),
+                            )
+                            .toList()
                         : List.empty(),
                   );
                 },
@@ -98,13 +97,13 @@ class AddRecipePageState extends State<AddRecipePage> {
                     },
                     items: state is BeansFound
                         ? state.beans
-                        .map(
-                          (method) => DropdownMenuItem(
-                        value: method,
-                        child: Text(method.name),
-                      ),
-                    )
-                        .toList()
+                            .map(
+                              (method) => DropdownMenuItem(
+                                value: method,
+                                child: Text(method.name),
+                              ),
+                            )
+                            .toList()
                         : List.empty(),
                   );
                 },
@@ -117,51 +116,58 @@ class AddRecipePageState extends State<AddRecipePage> {
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                onChanged: (text) {
+                onFieldSubmitted: (text) {
                   setState(() {
-                    _formData.recipeBuilder.ratio.waterQuantity =
-                        double.parse(text);
+                    if (isValidQuantity(text)) {
+                      _formData.recipeBuilder.ratio.waterQuantity =
+                          double.parse(text);
+                    }
                   });
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Water must not be empty';
-                  }
-                  return null;
+                  return isValidQuantity(value)
+                      ? null
+                      : 'Water must not be empty';
                 },
               ),
               TextFormField(
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  signed: false,
+                  decimal: true,
+                ),
                 controller: _beanQuantityController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Bean',
                 ),
-                onChanged: (text) {
+                onFieldSubmitted: (text) {
                   setState(() {
-                    _formData.recipeBuilder.ratio.beanQuantity =
-                        double.parse(text);
+                    if (isValidQuantity(text)) {
+                      _formData.recipeBuilder.ratio.beanQuantity =
+                          double.parse(text);
+                    }
                   });
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Bean must not be empty';
-                  }
-                  return null;
+                  return isValidQuantity(value)
+                      ? null
+                      : 'Bean must not be empty';
                 },
               ),
-              const Text('Ratio'),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Ratio (${_formData.recipeBuilder.ratio.ratioFormatted})',
+                  style: const TextStyle(fontSize: 24),
+                ),
+              ),
               Slider(
                 value: _formData.recipeBuilder.ratio.ratio,
                 min: 1,
                 max: 36,
                 divisions: 35,
-                label: _formData.recipeBuilder.ratio.formattedValue,
                 onChanged: (double value) {
-                  setState(() {
-                    _formData.recipeBuilder.ratio.ratio = value;
-                  });
+                  setState(() => updateRatio(value));
                 },
               ),
               ElevatedButton(
@@ -179,6 +185,22 @@ class AddRecipePageState extends State<AddRecipePage> {
         ),
       ),
     );
+  }
+
+  bool isValidQuantity(String? text) {
+    if (text == null) {
+      return false;
+    } else {
+      return text.isNotEmpty && double.parse(text) > 0;
+    }
+  }
+
+  void updateRatio(double ratio) {
+    _formData.recipeBuilder.ratio.ratio = ratio;
+    _beanQuantityController.text =
+        _formData.recipeBuilder.ratio.beanQuantity.toStringAsFixed(1);
+    _waterQuantityController.text =
+        '${_formData.recipeBuilder.ratio.waterQuantity}';
   }
 }
 

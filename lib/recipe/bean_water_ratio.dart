@@ -1,5 +1,5 @@
 const minRatio = 1;
-const maxRatio = 20;
+const maxRatio = 36;
 
 const minBeanQuantity = 0.75;
 const maxBeanQuantity = 1000.0;
@@ -13,15 +13,15 @@ const defaultBeanQuantity = 10.0;
 class BeanWaterRatio {
   double _waterQuantity = defaultWaterQuantity;
   double _beanQuantity = defaultBeanQuantity;
-  late double _value;
+  late double _ratio;
 
   BeanWaterRatio() {
-    _value = _waterQuantity / _beanQuantity;
+    _ratio = _waterQuantity / _beanQuantity;
   }
 
   set ratio(double quantity) {
-    _value = quantity;
-    _beanQuantity = (_waterQuantity / _value);
+    _ratio = quantity;
+    _beanQuantity = (_waterQuantity / _ratio);
   }
 
   set beanQuantity(double quantity) {
@@ -32,7 +32,7 @@ class BeanWaterRatio {
     } else if (ratio < minRatio) {
       _waterQuantity = _beanQuantity * minRatio;
     } else {
-      _value = ratio;
+      _ratio = ratio;
     }
   }
 
@@ -44,7 +44,7 @@ class BeanWaterRatio {
     } else if (ratio < minRatio) {
       _beanQuantity = _waterQuantity / minRatio;
     } else {
-      _value = ratio;
+      _ratio = ratio;
     }
   }
 
@@ -54,10 +54,10 @@ class BeanWaterRatio {
 
   double get ratio => _waterQuantity / _beanQuantity;
 
-  String get formattedValue => '1:${_value.toStringAsFixed(1)}';
+  String get ratioFormatted => '1:${_ratio.toStringAsFixed(1)}';
 
   @override
   String toString() {
-    return 'Ratio{_waterQuantity: $_waterQuantity, _beanQuantity: $_beanQuantity, _value: $_value}';
+    return 'BeanWaterRatio{_waterQuantity: $_waterQuantity, _beanQuantity: $_beanQuantity, _beanWaterRatio: $_ratio}';
   }
 }

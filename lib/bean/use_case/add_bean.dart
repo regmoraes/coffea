@@ -1,4 +1,4 @@
-import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

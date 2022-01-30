@@ -15,6 +15,11 @@ import 'package:coffea/recipe/ui/add_recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
+import 'package:coffea/roaster/repository/local_repository.dart';
+import 'package:coffea/roaster/ui/add_roaster_page.dart';
+import 'package:coffea/roaster/ui/roasters_page.dart';
+import 'package:coffea/roaster/use_case/add_roaster.dart';
+import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CoffeaModule extends Module {
@@ -23,14 +28,16 @@ class CoffeaModule extends Module {
         Bind.singleton((i) => BeanRepository()),
         Bind.singleton((i) => MethodRepository()),
         Bind.singleton((i) => RecipeRepository()),
-        Bind.singleton((i) => BeanRepository()),
+        Bind.singleton((i) => RoasterRepository()),
         Bind.singleton((i) => AddBean(i.get())),
         Bind.singleton((i) => AddRecipe(i.get())),
+        Bind.singleton((i) => AddRoaster(i.get())),
         Bind.singleton((i) => FindBeans(i.get())),
         Bind.singleton((i) => FindFlavors(i.get())),
         Bind.singleton((i) => FindMethods(i.get())),
         Bind.singleton((i) => FindRecipes(i.get())),
         Bind.singleton((i) => FindRoasts(i.get())),
+        Bind.singleton((i) => FindRoasters(i.get())),
       ];
 
   @override
@@ -40,15 +47,17 @@ class CoffeaModule extends Module {
           child: (context, args) => const HomePage(),
           children: [
             ChildRoute('/beans', child: (_, __) => const BeansPage()),
-            ChildRoute('/recipes', child: (_, __) => RecipesPage()),
             ChildRoute(
               '/experiments',
               child: (_, __) => const ExperimentsPage(),
             ),
+            ChildRoute('/recipes', child: (_, __) => RecipesPage()),
+            ChildRoute('/roasters', child: (_, __) => const RoastersPage()),
           ],
         ),
         ChildRoute('/add-bean', child: (_, __) => const AddBeanPage()),
         ChildRoute('/add-recipe', child: (_, __) => const AddRecipePage()),
+        ChildRoute('/add-roaster', child: (_, __) => const AddRoasterPage()),
         ChildRoute(
           '/beans/recipes',
           child: (_, args) => RecipesPage(bean: args.data),

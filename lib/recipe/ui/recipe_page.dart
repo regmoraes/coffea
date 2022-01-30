@@ -1,4 +1,4 @@
-import 'package:coffea/recipe/model/recipe.dart';
+import 'package:coffea/recipe/recipe.dart';
 import 'package:flutter/material.dart';
 
 class RecipePage extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/flavor.dart';
 import 'package:coffea/bean/use_case/find_flavors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,11 @@ class FlavorsPage extends StatefulWidget {
 }
 
 class _FlavorsState extends State<FlavorsPage> {
-  final FindFlavors findFlavors = Modular.get<FindFlavors>();
+  final findFlavors = Modular.get<FindFlavors>();
+  final findFlavorsResult = <Flavor>{};
+  final flavorsSearchResult = <Flavor>{};
+  final flavorsSearchController = TextEditingController(text: 'Search');
+  var isSearching = false;
 
   @override
   void initState() {
@@ -25,7 +29,35 @@ class _FlavorsState extends State<FlavorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Flavors")),
+      appBar: AppBar(
+        title: isSearching
+            ? TextField(
+                onChanged: (text) {
+                  flavorsSearchResult
+                      .where((flavor) => flavor.name.contains(text));
+                },
+              )
+            : const Text("Flavors"),
+        actions: [
+          isSearching
+              ? IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = false;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = true;
+                    });
+                  },
+                )
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
@@ -33,12 +65,21 @@ class _FlavorsState extends State<FlavorsPage> {
               bloc: findFlavors,
               builder: (context, state) {
                 if (state is FlavorsFound) {
+                  findFlavorsResult
+                    ..clear()
+                    ..addAll(state.flavors);
+
+                  flavorsSearchResult
+                    ..clear()
+                    ..addAll(findFlavorsResult);
+
                   return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: state.flavors.length,
+                    itemCount: flavorsSearchResult.length,
                     itemBuilder: (context, index) {
-                      final flavor = state.flavors.elementAt(index);
+                      final flavor = flavorsSearchResult.elementAt(index);
                       return ListTile(
+                        key: ValueKey(flavor.name),
                         title: Text(
                           flavor.name,
                           style: TextStyle(

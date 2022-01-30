@@ -1,9 +1,11 @@
-import 'package:coffea/bean/model/bean.dart';
-import 'package:coffea/bean/model/flavor.dart';
-import 'package:coffea/bean/model/roast.dart';
+import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/flavor.dart';
+import 'package:coffea/bean/roast.dart';
 import 'package:coffea/bean/use_case/add_bean.dart';
 import 'package:coffea/bean/use_case/find_flavors.dart';
 import 'package:coffea/bean/use_case/find_roasts.dart';
+import 'package:coffea/roaster/roaster.dart';
+import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -18,6 +20,7 @@ class AddBeanPage extends StatefulWidget {
 class AddBeanPageState extends State<AddBeanPage> {
   final addBean = Modular.get<AddBean>();
   final findFlavors = Modular.get<FindFlavors>();
+  final findRoasters = Modular.get<FindRoasters>();
   final findRoasts = Modular.get<FindRoasts>();
   final _formData = _AddBeanFormData(GlobalKey<FormState>());
 
@@ -49,17 +52,26 @@ class AddBeanPageState extends State<AddBeanPage> {
                   return null;
                 },
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Brand',
-                ),
-                onChanged: (text) => _formData.beanBrand = text,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Brand must not be empty';
-                  }
-                  return null;
+              BlocBuilder<FindRoasters, FindRoastersState>(
+                bloc: findRoasters,
+                builder: (context, state) {
+                  return DropdownButtonFormField<Roaster>(
+                    hint: const Text("Roaster"),
+                    value: _formData.roaster,
+                    onChanged: (roaster) {
+                      setState(() => _formData.roaster = roaster);
+                    },
+                    items: state is RoastersFound
+                        ? state.roasters
+                            .map(
+                              (roaster) => DropdownMenuItem(
+                                value: roaster,
+                                child: Text(roaster.name),
+                              ),
+                            )
+                            .toList()
+                        : List.empty(),
+                  );
                 },
               ),
               BlocBuilder<FindRoasts, FindRoastsState>(
@@ -67,9 +79,9 @@ class AddBeanPageState extends State<AddBeanPage> {
                 builder: (context, state) {
                   return DropdownButtonFormField<Roast>(
                     hint: const Text("Roast"),
-                    value: _formData.beanRoast,
+                    value: _formData.roast,
                     onChanged: (roast) {
-                      setState(() => _formData.beanRoast = roast);
+                      setState(() => _formData.roast = roast);
                     },
                     items: state is RoastsFound
                         ? state.roasts
@@ -129,8 +141,8 @@ class AddBeanPageState extends State<AddBeanPage> {
 class _AddBeanFormData {
   GlobalKey<FormState> formKey;
   String? beanName;
-  String? beanBrand;
-  Roast? beanRoast;
+  Roaster? roaster;
+  Roast? roast;
   List<Flavor> beanFlavors = [];
 
   _AddBeanFormData(this.formKey);
@@ -142,9 +154,9 @@ class _AddBeanFormData {
 
     return Bean(
       beanName!,
-      brand: beanBrand,
+      roaster: roaster,
       flavors: beanFlavors,
-      roast: beanRoast,
+      roast: roast,
     );
   }
 }
