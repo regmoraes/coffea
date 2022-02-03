@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 const beansPageIndex = 0;
-const experimentsPageIndex = 1;
-// const recipesPageIndex = 2;
+// const experimentsPageIndex = 1;
+const recipesPageIndex = 1;
 const roastersPageIndex = 2;
 
 class HomePage extends StatefulWidget {
@@ -51,12 +51,12 @@ class _HomePageState extends State<HomePage> {
                 case beansPageIndex:
                   Modular.to.navigate('/beans');
                   break;
-                case experimentsPageIndex:
-                  Modular.to.navigate('/experiments');
-                  break;
-                // case recipesPageIndex:
-                //   Modular.to.navigate('/recipes');
+                // case experimentsPageIndex:
+                //   Modular.to.navigate('/experiments');
                 //   break;
+                case recipesPageIndex:
+                  Modular.to.navigate('/recipes');
+                  break;
                 case roastersPageIndex:
                   Modular.to.navigate('/roasters');
                   break;

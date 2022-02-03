@@ -14,6 +14,7 @@ import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:coffea/recipe/ui/add_recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
+import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:coffea/roaster/repository/local_repository.dart';
 import 'package:coffea/roaster/ui/add_roaster_page.dart';
@@ -24,7 +25,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class CoffeaModule extends Module {
   @override
-  List<Bind> get binds => [
+  List<Bind> get binds =>
+      [
         Bind.singleton((i) => BeanRepository()),
         Bind.singleton((i) => MethodRepository()),
         Bind.singleton((i) => RecipeRepository()),
@@ -34,6 +36,7 @@ class CoffeaModule extends Module {
         Bind.singleton((i) => AddRoaster(i.get())),
         Bind.singleton((i) => FindBeans(i.get())),
         Bind.singleton((i) => FindFlavors(i.get())),
+        Bind.singleton((i) => FindGrindSizes(i.get())),
         Bind.singleton((i) => FindMethods(i.get())),
         Bind.singleton((i) => FindRecipes(i.get())),
         Bind.singleton((i) => FindRoasts(i.get())),

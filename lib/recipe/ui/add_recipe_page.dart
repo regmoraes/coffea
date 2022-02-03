@@ -2,8 +2,11 @@ import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:coffea/method/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
+import 'package:coffea/recipe/bean_water_ratio.dart';
+import 'package:coffea/recipe/grind_size.dart';
 import 'package:coffea/recipe/recipe.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
+import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -21,6 +24,7 @@ class AddRecipePageState extends State<AddRecipePage> {
   final addRecipe = Modular.get<AddRecipe>();
   final findMethods = Modular.get<FindMethods>();
   final findBeans = Modular.get<FindBeans>();
+  final findGrindSizes = Modular.get<FindGrindSizes>();
   final _formData = _AddRecipeFormData(GlobalKey<FormState>());
   late final TextEditingController _beanQuantityController =
       TextEditingController(
@@ -39,6 +43,7 @@ class AddRecipePageState extends State<AddRecipePage> {
     }
     findMethods.findAll();
     findBeans.findAll();
+    findGrindSizes.findAll();
 
     // _beanQuantityController =
   }
@@ -73,6 +78,9 @@ class AddRecipePageState extends State<AddRecipePage> {
                               (method) => DropdownMenuItem(
                                 value: method,
                                 child: Text(method.name),
+                                onTap: () {
+                                  _formData.recipeBuilder.method = method;
+                                },
                               ),
                             )
                             .toList()
@@ -88,7 +96,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                     value: _formData.recipeBuilder.bean,
                     onChanged: (bean) {
                       setState(
-                            () {
+                        () {
                           if (bean != null) {
                             _formData.recipeBuilder.bean = bean;
                           }
@@ -98,9 +106,41 @@ class AddRecipePageState extends State<AddRecipePage> {
                     items: state is BeansFound
                         ? state.beans
                             .map(
-                              (method) => DropdownMenuItem(
-                                value: method,
-                                child: Text(method.name),
+                              (bean) => DropdownMenuItem(
+                                value: bean,
+                                child: Text(bean.name),
+                                onTap: () {
+                                  _formData.recipeBuilder.bean = bean;
+                                },
+                              ),
+                            )
+                            .toList()
+                        : List.empty(),
+                  );
+                },
+              ),
+              BlocBuilder<FindGrindSizes, FindGrindSizesState>(
+                bloc: findGrindSizes,
+                builder: (context, state) {
+                  return DropdownButtonFormField<GrindSize>(
+                    hint: const Text("Grind Size"),
+                    value: _formData.recipeBuilder.grindSize,
+                    onChanged: (grindSize) {
+                      setState(() {
+                        if (grindSize != null) {
+                          _formData.recipeBuilder.grindSize;
+                        }
+                      });
+                    },
+                    items: state is GrindSizesFound
+                        ? state.grindSizes
+                            .map(
+                              (grindSize) => DropdownMenuItem(
+                                value: grindSize,
+                                child: Text(grindSize.size),
+                                onTap: () {
+                                  _formData.recipeBuilder.grindSize = grindSize;
+                                },
                               ),
                             )
                             .toList()
@@ -163,9 +203,9 @@ class AddRecipePageState extends State<AddRecipePage> {
               ),
               Slider(
                 value: _formData.recipeBuilder.ratio.ratio,
-                min: 1,
-                max: 36,
-                divisions: 35,
+                min: minRatio.toDouble(),
+                max: maxRatio.toDouble(),
+                divisions: maxRatio - minRatio,
                 onChanged: (double value) {
                   setState(() => updateRatio(value));
                 },
