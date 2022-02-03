@@ -12,6 +12,7 @@ import 'package:coffea/method/repository/local_repository.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:coffea/recipe/ui/add_recipe_page.dart';
+import 'package:coffea/recipe/ui/recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
@@ -25,8 +26,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class CoffeaModule extends Module {
   @override
-  List<Bind> get binds =>
-      [
+  List<Bind> get binds => [
         Bind.singleton((i) => BeanRepository()),
         Bind.singleton((i) => MethodRepository()),
         Bind.singleton((i) => RecipeRepository()),
@@ -66,5 +66,9 @@ class CoffeaModule extends Module {
           child: (_, args) => RecipesPage(bean: args.data),
         ),
         ChildRoute('/flavors', child: (_, args) => FlavorsPage(args.data)),
+        ChildRoute(
+          '/recipe',
+          child: (_, recipe) => RecipePage(recipe.data),
+        ),
       ];
 }

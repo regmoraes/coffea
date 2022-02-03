@@ -5,6 +5,7 @@ import 'package:coffea/recipe/grind_size.dart';
 import 'package:coffea/recipe/step.dart';
 
 class Recipe {
+  final String name;
   final Method method;
   final Bean bean;
   final GrindSize grindSize;
@@ -15,6 +16,7 @@ class Recipe {
   late final Duration totalDuration;
 
   Recipe({
+    required this.name,
     required this.method,
     required this.bean,
     required this.grindSize,
@@ -22,13 +24,14 @@ class Recipe {
     required this.steps,
     required this.comments,
   }) {
-    totalDuration = steps
-        .map((step) => step.duration)
-        .reduce((totalDuration, duration) => totalDuration + duration);
+    totalDuration = steps.map((step) => step.duration).fold(
+        const Duration(seconds: 0),
+        (totalDuration, duration) => totalDuration + duration);
   }
 }
 
 class RecipeBuilder {
+  String? name;
   Method? method;
   Bean? bean;
   GrindSize? grindSize;
@@ -39,6 +42,7 @@ class RecipeBuilder {
 
   Recipe build() {
     return Recipe(
+      name: name!,
       method: method!,
       bean: bean!,
       grindSize: grindSize!,

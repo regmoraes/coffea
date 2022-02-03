@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 class RecipePage extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipePage({Key? key, required this.recipe}) : super(key: key);
+  const RecipePage(this.recipe, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(recipe.name)),
       body: Column(
         children: [
           Text(recipe.method.name),
+          Text(recipe.bean.name),
           Text(recipe.grindSize.size),
-          Text('$recipe.totalDuration'),
+          Text(recipe.ratio.ratioFormatted),
+          Text(recipe.comments ?? ''),
+          Text('${recipe.totalDuration}'),
         ],
       ),
     );

@@ -59,6 +59,20 @@ class AddRecipePageState extends State<AddRecipePage> {
           key: _formData.formKey,
           child: Column(
             children: <Widget>[
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Name',
+                ),
+                onFieldSubmitted: (text) {
+                  setState(() => _formData.recipeBuilder.name = text);
+                },
+                validator: (value) {
+                  return value?.isNotEmpty == true
+                      ? null
+                      : 'Name must not be empty';
+                },
+              ),
               BlocBuilder<FindMethods, FindMethodsState>(
                 bloc: findMethods,
                 builder: (context, state) {

@@ -31,6 +31,12 @@ class RecipesPage extends StatelessWidget {
                   leading: Text(recipe.method.name),
                   title: Text(recipe.ratio.ratioFormatted),
                   trailing: Text('${recipe.totalDuration}'),
+                  onTap: () {
+                    Modular.to.pushNamed(
+                      '/recipe',
+                      arguments: state.recipes[index],
+                    );
+                  },
                 );
               },
             );

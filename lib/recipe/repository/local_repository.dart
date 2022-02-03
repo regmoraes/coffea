@@ -2,7 +2,7 @@ import 'package:coffea/application/repository.dart';
 import 'package:coffea/recipe/grind_size.dart';
 import 'package:coffea/recipe/recipe.dart';
 
-final _recipes = List<Recipe>.empty();
+final _recipes = <Recipe>[];
 
 class RecipeRepository {
   Future<List<Recipe>> findAll() async {
