@@ -12,6 +12,8 @@ import 'package:coffea/method/repository/local_repository.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:coffea/recipe/ui/add_recipe_page.dart';
+import 'package:coffea/recipe/ui/add_step_page.dart';
+import 'package:coffea/recipe/ui/recipe_execution_page.dart';
 import 'package:coffea/recipe/ui/recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
@@ -67,8 +69,16 @@ class CoffeaModule extends Module {
         ),
         ChildRoute('/flavors', child: (_, args) => FlavorsPage(args.data)),
         ChildRoute(
-          '/recipe',
+          '/recipes/detail',
           child: (_, recipe) => RecipePage(recipe.data),
+        ),
+        ChildRoute(
+          '/recipes/execution',
+          child: (_, recipe) => RecipeExecutionPage(recipe.data),
+        ),
+        ChildRoute(
+          '/recipes/steps',
+          child: (_, recipe) => const AddStepPage(),
         ),
       ];
 }

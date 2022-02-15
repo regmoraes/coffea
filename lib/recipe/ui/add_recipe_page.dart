@@ -4,7 +4,8 @@ import 'package:coffea/method/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/bean_water_ratio.dart';
 import 'package:coffea/recipe/grind_size.dart';
-import 'package:coffea/recipe/recipe.dart';
+import 'package:coffea/recipe/recipe_builder.dart';
+import 'package:coffea/recipe/step.dart' as coffea;
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:flutter/material.dart';
@@ -223,6 +224,16 @@ class AddRecipePageState extends State<AddRecipePage> {
                 onChanged: (double value) {
                   setState(() => updateRatio(value));
                 },
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final coffea.Step? step =
+                      await Modular.to.pushNamed('/recipes/steps');
+                  if (step != null) {
+                    _formData.recipeBuilder.steps.add(step);
+                  }
+                },
+                child: const Text('Add Step'),
               ),
               ElevatedButton(
                 onPressed: () {

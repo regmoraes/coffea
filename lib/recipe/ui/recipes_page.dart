@@ -33,7 +33,7 @@ class RecipesPage extends StatelessWidget {
                   trailing: Text('${recipe.totalDuration}'),
                   onTap: () {
                     Modular.to.pushNamed(
-                      '/recipe',
+                      '/recipes/detail',
                       arguments: state.recipes[index],
                     );
                   },

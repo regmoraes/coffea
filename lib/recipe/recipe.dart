@@ -29,27 +29,3 @@ class Recipe {
         (totalDuration, duration) => totalDuration + duration);
   }
 }
-
-class RecipeBuilder {
-  String? name;
-  Method? method;
-  Bean? bean;
-  GrindSize? grindSize;
-  List<Step>? steps;
-  String? comments;
-
-  final BeanWaterRatio ratio = BeanWaterRatio();
-
-  Recipe build() {
-    return Recipe(
-      name: name!,
-      method: method!,
-      bean: bean!,
-      grindSize: grindSize!,
-      steps: steps ?? List.empty(),
-      //TODO create page for steps creation
-      comments: comments,
-      ratio: ratio,
-    );
-  }
-}

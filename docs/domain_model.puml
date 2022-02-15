@@ -1,0 +1,65 @@
+@startuml
+hide empty methods
+hide empty fields
+
+class Bean
+
+class Flavor
+
+class Method {
+    Name
+}
+
+enum GrindSize {
+    FINE,
+    MEDIUM_FINE,
+    MEDIUM,
+    MEDIUM_COARSE,
+    COARSE
+}
+
+class Producer
+
+class Roaster
+
+enum Roast {
+    CUSTOM_PROFILE,
+    LIGHT,
+    MEDIUM_LIGHT,
+    MEDIUM,
+    MEDIUM_DARK,
+    DARK
+}
+
+class Recipe {
+   double coffeeWaterRatio
+   String comments
+}
+
+class Step {
+    Duration
+    Description
+}
+
+class Experiment
+
+Bean ..> "1..*" Flavor
+
+Bean ..> Producer
+
+Bean ..> Roast
+
+Bean ..> Roaster
+
+Experiment --> Recipe
+
+Experiment --> "1..*" Adjustment
+
+Recipe ..> Bean
+
+Recipe ..> GrindSize
+
+Recipe ..> Method
+
+Recipe --> "1..*" Step
+@enduml
