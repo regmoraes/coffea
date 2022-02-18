@@ -2,8 +2,8 @@ import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:coffea/method/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
-import 'package:coffea/recipe/bean_water_ratio.dart';
 import 'package:coffea/recipe/grind_size.dart';
+import 'package:coffea/recipe/ratio_calculator.dart';
 import 'package:coffea/recipe/recipe_builder.dart';
 import 'package:coffea/recipe/step.dart' as coffea;
 import 'package:coffea/recipe/use_case/add_recipe.dart';
@@ -29,11 +29,11 @@ class AddRecipePageState extends State<AddRecipePage> {
   final _formData = _AddRecipeFormData(GlobalKey<FormState>());
   late final TextEditingController _beanQuantityController =
       TextEditingController(
-    text: '${_formData.recipeBuilder.ratio.beanQuantity}',
+        text: '${_formData.recipeBuilder.ratioCalculator.beanQuantity}',
   );
   late final TextEditingController _waterQuantityController =
       TextEditingController(
-    text: '${_formData.recipeBuilder.ratio.waterQuantity}',
+        text: '${_formData.recipeBuilder.ratioCalculator.waterQuantity}',
   );
 
   @override
@@ -51,7 +51,7 @@ class AddRecipePageState extends State<AddRecipePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_formData.recipeBuilder.ratio);
+    print(_formData.recipeBuilder.ratioCalculator);
     return Scaffold(
       appBar: AppBar(title: const Text("New Recipe")),
       body: Container(
@@ -174,7 +174,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                 onFieldSubmitted: (text) {
                   setState(() {
                     if (isValidQuantity(text)) {
-                      _formData.recipeBuilder.ratio.waterQuantity =
+                      _formData.recipeBuilder.ratioCalculator.waterQuantity =
                           double.parse(text);
                     }
                   });
@@ -198,7 +198,7 @@ class AddRecipePageState extends State<AddRecipePage> {
                 onFieldSubmitted: (text) {
                   setState(() {
                     if (isValidQuantity(text)) {
-                      _formData.recipeBuilder.ratio.beanQuantity =
+                      _formData.recipeBuilder.ratioCalculator.beanQuantity =
                           double.parse(text);
                     }
                   });
@@ -212,12 +212,12 @@ class AddRecipePageState extends State<AddRecipePage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Ratio (${_formData.recipeBuilder.ratio.ratioFormatted})',
+                  'Ratio (${_formData.recipeBuilder.ratioCalculator.ratio.formattedAsRatio()})',
                   style: const TextStyle(fontSize: 24),
                 ),
               ),
               Slider(
-                value: _formData.recipeBuilder.ratio.ratio,
+                value: _formData.recipeBuilder.ratioCalculator.ratio,
                 min: minRatio.toDouble(),
                 max: maxRatio.toDouble(),
                 divisions: maxRatio - minRatio,
@@ -261,11 +261,13 @@ class AddRecipePageState extends State<AddRecipePage> {
   }
 
   void updateRatio(double ratio) {
-    _formData.recipeBuilder.ratio.ratio = ratio;
+    _formData.recipeBuilder.ratioCalculator.ratio = ratio;
     _beanQuantityController.text =
-        _formData.recipeBuilder.ratio.beanQuantity.toStringAsFixed(1);
+        _formData.recipeBuilder.ratioCalculator.beanQuantity.toStringAsFixed(1);
     _waterQuantityController.text =
-        '${_formData.recipeBuilder.ratio.waterQuantity}';
+        '${_formData.recipeBuilder.ratioCalculator.waterQuantity}';
+    print(_formData.recipeBuilder.ratioCalculator.ratio);
+    print(_formData.recipeBuilder);
   }
 }
 

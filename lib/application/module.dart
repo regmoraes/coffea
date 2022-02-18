@@ -13,12 +13,13 @@ import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:coffea/recipe/ui/add_recipe_page.dart';
 import 'package:coffea/recipe/ui/add_step_page.dart';
-import 'package:coffea/recipe/ui/recipe_execution_page.dart';
+import 'package:coffea/recipe/ui/make_recipe_page.dart';
 import 'package:coffea/recipe/ui/recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
+import 'package:coffea/recipe/use_case/make_recipe.dart';
 import 'package:coffea/roaster/repository/local_repository.dart';
 import 'package:coffea/roaster/ui/add_roaster_page.dart';
 import 'package:coffea/roaster/ui/roasters_page.dart';
@@ -43,6 +44,7 @@ class CoffeaModule extends Module {
         Bind.singleton((i) => FindRecipes(i.get())),
         Bind.singleton((i) => FindRoasts(i.get())),
         Bind.singleton((i) => FindRoasters(i.get())),
+        Bind.singleton((i) => MakeRecipe()),
       ];
 
   @override
@@ -74,7 +76,7 @@ class CoffeaModule extends Module {
         ),
         ChildRoute(
           '/recipes/execution',
-          child: (_, recipe) => RecipeExecutionPage(recipe.data),
+          child: (_, recipe) => MakeRecipePage(recipe.data),
         ),
         ChildRoute(
           '/recipes/steps',

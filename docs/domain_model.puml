@@ -4,6 +4,12 @@ hide empty fields
 
 class Bean
 
+class RatioCalculator {
+    double ratio
+    double beanQuantity
+    double waterQuantity
+}
+
 class Flavor
 
 class Method {
@@ -32,8 +38,12 @@ enum Roast {
 }
 
 class Recipe {
-   double coffeeWaterRatio
-   String comments
+   String name
+   Bean bean
+   double ratio
+   double waterQuantity
+   double beanQuantity
+   String? comments
 }
 
 class Step {
@@ -55,11 +65,11 @@ Experiment --> Recipe
 
 Experiment --> "1..*" Adjustment
 
-Recipe ..> Bean
+Recipe --> Bean
 
-Recipe ..> GrindSize
+Recipe --> GrindSize
 
-Recipe ..> Method
+Recipe --> Method
 
 Recipe --> "1..*" Step
 @enduml

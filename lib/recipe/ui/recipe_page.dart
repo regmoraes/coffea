@@ -1,3 +1,4 @@
+import 'package:coffea/recipe/ratio_calculator.dart';
 import 'package:coffea/recipe/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,7 +17,9 @@ class RecipePage extends StatelessWidget {
           Text(recipe.method.name),
           Text(recipe.bean.name),
           Text(recipe.grindSize.size),
-          Text(recipe.ratio.ratioFormatted),
+          Text(recipe.ratio.formattedAsRatio()),
+          Text(recipe.beanQuantity.formattedAsGrams()),
+          Text(recipe.waterQuantity.formattedAsMl()),
           Text(recipe.comments ?? ''),
           Text('${recipe.totalDuration}'),
           ElevatedButton(

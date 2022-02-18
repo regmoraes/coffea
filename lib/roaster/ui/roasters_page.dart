@@ -3,13 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class RoastersPage extends StatelessWidget {
+class RoastersPage extends StatefulWidget {
   const RoastersPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final findRoasters = Modular.get<FindRoasters>();
+  State<RoastersPage> createState() => _RoastersPageState();
+}
 
+class _RoastersPageState extends State<RoastersPage> {
+  final FindRoasters findRoasters = Modular.get<FindRoasters>();
+
+  @override
+  void initState() {
+    super.initState();
+    findRoasters.findAll();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<FindRoasters, FindRoastersState>(
         bloc: findRoasters,
@@ -31,7 +42,6 @@ class RoastersPage extends StatelessWidget {
         child: const Icon(Icons.add),
         onPressed: () async {
           await Modular.to.pushNamed('/add-roaster');
-          findRoasters.findAll();
         },
       ),
     );

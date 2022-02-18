@@ -10,17 +10,17 @@ const maxWaterQuantity = 1000.0;
 const defaultWaterQuantity = 100.0;
 const defaultBeanQuantity = 10.0;
 
-class BeanWaterRatio {
+class RatioCalculator {
   double _waterQuantity = defaultWaterQuantity;
   double _beanQuantity = defaultBeanQuantity;
   late double _ratio;
 
-  BeanWaterRatio() {
+  RatioCalculator() {
     _ratio = _waterQuantity / _beanQuantity;
   }
 
-  set ratio(double quantity) {
-    _ratio = quantity;
+  set ratio(double ratio) {
+    _ratio = ratio;
     _beanQuantity = (_waterQuantity / _ratio);
   }
 
@@ -54,10 +54,16 @@ class BeanWaterRatio {
 
   double get ratio => _waterQuantity / _beanQuantity;
 
-  String get ratioFormatted => '1:${_ratio.toStringAsFixed(1)}';
-
   @override
   String toString() {
     return 'BeanWaterRatio{_waterQuantity: $_waterQuantity, _beanQuantity: $_beanQuantity, _beanWaterRatio: $_ratio}';
   }
+}
+
+extension RatioCalculatorFormatter on double {
+  String formattedAsRatio() => '1:${toStringAsFixed(1)}';
+
+  String formattedAsMl() => '${toStringAsFixed(1)}ml';
+
+  String formattedAsGrams() => '${toStringAsFixed(1)}g';
 }
