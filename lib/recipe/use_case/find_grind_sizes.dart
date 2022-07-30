@@ -1,4 +1,4 @@
-import 'package:coffea/recipe/grind_size.dart';
+import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

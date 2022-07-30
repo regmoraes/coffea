@@ -61,15 +61,15 @@ Bean ..> Roast
 
 Bean ..> Roaster
 
-Experiment --> Recipe
+Experiment ..> Recipe
 
 Experiment --> "1..*" Adjustment
 
-Recipe --> Bean
+Recipe ..> Bean
 
-Recipe --> GrindSize
+Recipe ..> GrindSize
 
-Recipe --> Method
+Recipe ..> Method
 
 Recipe --> "1..*" Step
 @enduml

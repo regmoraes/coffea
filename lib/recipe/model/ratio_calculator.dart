@@ -1,5 +1,6 @@
-const minRatio = 1;
-const maxRatio = 36;
+const minRatio = 1 / 36; // 1:36
+const maxRatio = 1 / 2; // 1:2
+const ratioSteps = 34;
 
 const minBeanQuantity = 0.75;
 const maxBeanQuantity = 1000.0;
@@ -16,21 +17,21 @@ class RatioCalculator {
   late double _ratio;
 
   RatioCalculator() {
-    _ratio = _waterQuantity / _beanQuantity;
+    _ratio = _beanQuantity / _waterQuantity;
   }
 
   set ratio(double ratio) {
     _ratio = ratio;
-    _beanQuantity = (_waterQuantity / _ratio);
+    _beanQuantity = _waterQuantity * _ratio;
   }
 
   set beanQuantity(double quantity) {
     _beanQuantity = quantity;
 
     if (ratio > maxRatio) {
-      _waterQuantity = _beanQuantity * maxRatio;
+      _waterQuantity = _beanQuantity / maxRatio;
     } else if (ratio < minRatio) {
-      _waterQuantity = _beanQuantity * minRatio;
+      _waterQuantity = _beanQuantity / minRatio;
     } else {
       _ratio = ratio;
     }
@@ -40,9 +41,9 @@ class RatioCalculator {
     _waterQuantity = quantity;
 
     if (ratio > maxRatio) {
-      _beanQuantity = _waterQuantity / maxRatio;
+      _beanQuantity = _waterQuantity * maxRatio;
     } else if (ratio < minRatio) {
-      _beanQuantity = _waterQuantity / minRatio;
+      _beanQuantity = _waterQuantity * minRatio;
     } else {
       _ratio = ratio;
     }
@@ -52,7 +53,7 @@ class RatioCalculator {
 
   double get waterQuantity => _waterQuantity;
 
-  double get ratio => _waterQuantity / _beanQuantity;
+  double get ratio => _beanQuantity / _waterQuantity;
 
   @override
   String toString() {
@@ -60,8 +61,11 @@ class RatioCalculator {
   }
 }
 
-extension RatioCalculatorFormatter on double {
-  String formattedAsRatio() => '1:${toStringAsFixed(1)}';
+extension RatioFormatter on double {
+  String formattedAsRatio() {
+    final beanQuantity = 1 / this;
+    return '1:${beanQuantity.toStringAsFixed(0)}';
+  }
 
   String formattedAsMl() => '${toStringAsFixed(1)}ml';
 

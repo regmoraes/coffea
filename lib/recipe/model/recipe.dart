@@ -1,7 +1,7 @@
 import 'package:coffea/bean/bean.dart';
 import 'package:coffea/method/method.dart';
-import 'package:coffea/recipe/grind_size.dart';
-import 'package:coffea/recipe/step.dart';
+import 'package:coffea/recipe/model/grind_size.dart';
+import 'package:coffea/recipe/model/step.dart';
 
 class Recipe {
   final String name;

@@ -2,10 +2,10 @@ import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:coffea/method/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
-import 'package:coffea/recipe/grind_size.dart';
-import 'package:coffea/recipe/ratio_calculator.dart';
-import 'package:coffea/recipe/recipe_builder.dart';
-import 'package:coffea/recipe/step.dart' as coffea;
+import 'package:coffea/recipe/model/grind_size.dart';
+import 'package:coffea/recipe/model/ratio_calculator.dart';
+import 'package:coffea/recipe/model/recipe_builder.dart';
+import 'package:coffea/recipe/model/step.dart' as coffea;
 import 'package:coffea/recipe/use_case/add_recipe.dart';
 import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:flutter/material.dart';
@@ -218,9 +218,9 @@ class AddRecipePageState extends State<AddRecipePage> {
               ),
               Slider(
                 value: _formData.recipeBuilder.ratioCalculator.ratio,
-                min: minRatio.toDouble(),
-                max: maxRatio.toDouble(),
-                divisions: maxRatio - minRatio,
+                min: minRatio,
+                max: maxRatio,
+                divisions: ratioSteps.toInt(),
                 onChanged: (double value) {
                   setState(() => updateRatio(value));
                 },

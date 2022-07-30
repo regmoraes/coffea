@@ -1,4 +1,4 @@
-import 'package:coffea/recipe/step.dart';
+import 'package:coffea/recipe/model/step.dart';
 
 class StepBuilder {
   late String description;

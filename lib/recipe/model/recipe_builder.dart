@@ -1,9 +1,9 @@
 import 'package:coffea/bean/bean.dart';
 import 'package:coffea/method/method.dart';
-import 'package:coffea/recipe/grind_size.dart';
-import 'package:coffea/recipe/ratio_calculator.dart';
-import 'package:coffea/recipe/recipe.dart';
-import 'package:coffea/recipe/step.dart';
+import 'package:coffea/recipe/model/grind_size.dart';
+import 'package:coffea/recipe/model/ratio_calculator.dart';
+import 'package:coffea/recipe/model/recipe.dart';
+import 'package:coffea/recipe/model/step.dart';
 
 class RecipeBuilder {
   String? name;

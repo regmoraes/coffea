@@ -1,5 +1,5 @@
-import 'package:coffea/recipe/recipe.dart';
-import 'package:coffea/recipe/step.dart' as coffea;
+import 'package:coffea/recipe/model/recipe.dart';
+import 'package:coffea/recipe/model/step.dart' as coffea;
 import 'package:coffea/recipe/use_case/make_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +28,8 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
             actions: [
               state is Running
                   ? IconButton(
-                      icon: const Icon(Icons.stop),
-                      onPressed: () => state.currentStep.stop(),
+                icon: const Icon(Icons.stop),
+                      onPressed: () => makeRecipe.stop(),
                     )
                   : IconButton(
                       icon: const Icon(Icons.play_arrow),
@@ -41,7 +41,14 @@ class _MakeRecipePageState extends State<MakeRecipePage> {
             child: ListView.builder(
               itemCount: widget.recipe.steps.length,
               itemBuilder: (_, index) {
-                return StepItem(step: widget.recipe.steps[index]);
+                final step = widget.recipe.steps[index];
+                final recipeState = state;
+
+                if (recipeState is Running && recipeState.currentStep == step) {
+                  return RunningStepItem(recipeRunningState: recipeState);
+                } else {
+                  return StepItem(step: step);
+                }
               },
             ),
           ),
@@ -61,29 +68,40 @@ class StepItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<coffea.Step, coffea.StepState>(
-      bloc: step,
-      listener: (_, state) {
-        if (state is coffea.StepFinished) {
-          step.stop();
-        }
-      },
-      builder: (_, state) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          color:
-              state is coffea.StepRunning ? Colors.greenAccent : Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(step.description),
-              state is coffea.StepRunning
-                  ? Text('Duration ${state.remainingDuration.inSeconds}')
-                  : Text('Duration ${step.duration.inSeconds}'),
-            ],
-          ),
-        );
-      },
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(step.description),
+          Text('Duration ${step.duration.inSeconds}'),
+        ],
+      ),
+    );
+  }
+}
+
+class RunningStepItem extends StatelessWidget {
+  final Running recipeRunningState;
+
+  const RunningStepItem({
+    Key? key,
+    required this.recipeRunningState,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.greenAccent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(recipeRunningState.currentStep.description),
+          Text('Duration ${recipeRunningState.remainingStepDuration.inSeconds}')
+        ],
+      ),
     );
   }
 }

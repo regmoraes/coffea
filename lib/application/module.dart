@@ -44,7 +44,7 @@ class CoffeaModule extends Module {
         Bind.singleton((i) => FindRecipes(i.get())),
         Bind.singleton((i) => FindRoasts(i.get())),
         Bind.singleton((i) => FindRoasters(i.get())),
-        Bind.singleton((i) => MakeRecipe()),
+        Bind.factory((i) => MakeRecipe()),
       ];
 
   @override
@@ -75,7 +75,7 @@ class CoffeaModule extends Module {
           child: (_, recipe) => RecipePage(recipe.data),
         ),
         ChildRoute(
-          '/recipes/execution',
+          '/recipes/make',
           child: (_, recipe) => MakeRecipePage(recipe.data),
         ),
         ChildRoute(

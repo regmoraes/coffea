@@ -1,5 +1,5 @@
 import 'package:coffea/bean/bean.dart';
-import 'package:coffea/recipe/ratio_calculator.dart';
+import 'package:coffea/recipe/model/ratio_calculator.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
