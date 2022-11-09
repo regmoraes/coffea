@@ -2,8 +2,8 @@ import 'package:coffea/bean/bean.dart';
 import 'package:coffea/bean/flavor.dart';
 import 'package:coffea/bean/roast.dart';
 import 'package:coffea/bean/use_case/add_bean.dart';
-import 'package:coffea/bean/use_case/find_flavors.dart';
-import 'package:coffea/bean/use_case/find_roasts.dart';
+import 'package:coffea/bean/use_case/get_flavors.dart';
+import 'package:coffea/bean/use_case/get_roasts.dart';
 import 'package:coffea/roaster/roaster.dart';
 import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter/material.dart';
@@ -19,15 +19,15 @@ class AddBeanPage extends StatefulWidget {
 
 class AddBeanPageState extends State<AddBeanPage> {
   final addBean = Modular.get<AddBean>();
-  final findFlavors = Modular.get<FindFlavors>();
-  final findRoasters = Modular.get<FindRoasters>();
+  final findFlavors = Modular.get<GetFlavors>();
+  final findRoasters = Modular.get<GetRoasters>();
   final findRoasts = Modular.get<FindRoasts>();
   final _formData = _AddBeanFormData(GlobalKey<FormState>());
 
   @override
   void initState() {
     super.initState();
-    findFlavors.findAll();
+    findFlavors.getAll();
     findRoasts.findAll();
   }
 
@@ -52,7 +52,7 @@ class AddBeanPageState extends State<AddBeanPage> {
                   return null;
                 },
               ),
-              BlocBuilder<FindRoasters, FindRoastersState>(
+              BlocBuilder<GetRoasters, FindRoastersState>(
                 bloc: findRoasters,
                 builder: (context, state) {
                   return DropdownButtonFormField<Roaster>(
@@ -98,12 +98,12 @@ class AddBeanPageState extends State<AddBeanPage> {
               ),
               Wrap(
                 children: _formData.beanFlavors.map<Widget>(
-                  (e) {
+                  (flavor) {
                     return Chip(
-                      label: Text(e.name),
-                      backgroundColor: e.color,
+                      label: Text(flavor.name),
+                      backgroundColor: Color(flavor.color),
                       onDeleted: () {
-                        setState(() => _formData.beanFlavors.remove(e));
+                        setState(() => _formData.beanFlavors.remove(flavor));
                       },
                     );
                   },
@@ -152,11 +152,10 @@ class _AddBeanFormData {
   Bean createBean() {
     assert(beanName != null);
 
-    return Bean(
-      beanName!,
-      roaster: roaster,
-      flavors: beanFlavors,
-      roast: roast,
-    );
+    return Bean()
+      ..name = beanName!
+      ..roaster.value = roaster!
+      ..flavors.addAll(beanFlavors)
+      ..roast.value = roast!;
   }
 }

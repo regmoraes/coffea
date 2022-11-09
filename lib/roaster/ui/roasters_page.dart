@@ -11,18 +11,18 @@ class RoastersPage extends StatefulWidget {
 }
 
 class _RoastersPageState extends State<RoastersPage> {
-  final FindRoasters findRoasters = Modular.get<FindRoasters>();
+  final GetRoasters findRoasters = Modular.get<GetRoasters>();
 
   @override
   void initState() {
     super.initState();
-    findRoasters.findAll();
+    findRoasters.getAll();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FindRoasters, FindRoastersState>(
+      body: BlocBuilder<GetRoasters, FindRoastersState>(
         bloc: findRoasters,
         builder: (context, state) {
           if (state is RoastersFound) {

@@ -1,7 +1,10 @@
+import 'package:isar/isar.dart';
+
+part 'method.g.dart';
+
+@collection
 class Method {
-  final String name;
+  Id id = Isar.autoIncrement;
 
-  Method(this.name);
-
-  factory Method.fromJson(dynamic value) => Method(value as String);
+  late String name;
 }

@@ -64,6 +64,6 @@ class _AddRoasterFormData {
   Roaster createRoaster() {
     assert(roasterName != null);
 
-    return Roaster(roasterName!);
+    return Roaster()..name = roasterName!;
   }
 }

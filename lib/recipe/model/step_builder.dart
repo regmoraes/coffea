@@ -4,5 +4,7 @@ class StepBuilder {
   late String description;
   late Duration duration;
 
-  Step build() => Step(description, duration);
+  Step build() => Step()
+    ..description = description
+    ..duration = duration.inSeconds;
 }

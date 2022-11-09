@@ -1,15 +1,10 @@
-import 'package:equatable/equatable.dart';
+import 'package:isar/isar.dart';
 
-class Roast extends Equatable {
-  final String type;
+part 'roast.g.dart';
 
-  const Roast(this.type);
+@collection
+class Roast {
+  Id id = Isar.autoIncrement;
 
-  @override
-  String toString() => 'Roast{type: $type}';
-
-  factory Roast.fromJson(dynamic value) => Roast(value as String);
-
-  @override
-  List<Object?> get props => [type];
+  late String type;
 }

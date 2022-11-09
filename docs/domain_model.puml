@@ -13,7 +13,7 @@ class RatioCalculator {
 class Flavor
 
 class Method {
-    Name
+    name
 }
 
 enum GrindSize {
@@ -47,19 +47,27 @@ class Recipe {
 }
 
 class Step {
-    Duration
-    Description
+    duration
+    description
+}
+
+class WaterStep extends Step {
+    double quantity
+}
+
+class BeanStep extends Step {
+    double quantity
 }
 
 class Experiment
 
 Bean ..> "1..*" Flavor
 
-Bean ..> Producer
+Producer ..> "0..*" Bean
 
 Bean ..> Roast
 
-Bean ..> Roaster
+Roaster ..> "0..*" Bean
 
 Experiment ..> Recipe
 

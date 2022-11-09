@@ -1,5 +1,12 @@
+import 'package:isar/isar.dart';
+
+part 'producer.g.dart';
+
+@collection
 class Producer {
-  final String name;
+  Id? id = Isar.autoIncrement;
+
+  String name;
 
   Producer(this.name);
 }

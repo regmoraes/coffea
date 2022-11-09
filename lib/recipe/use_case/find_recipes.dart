@@ -1,13 +1,14 @@
+import 'package:coffea/bean/bean.dart';
 import 'package:coffea/recipe/model/recipe.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FindRecipes extends Cubit<FindRecipesState> {
+class GetRecipes extends Cubit<FindRecipesState> {
   final RecipeRepository recipeRepository;
 
-  FindRecipes(this.recipeRepository) : super(FindRecipesState());
+  GetRecipes(this.recipeRepository) : super(FindRecipesState());
 
-  void findAll() async {
+  void getAll() async {
     final recipes = await recipeRepository.findAll();
 
     if (recipes.isEmpty) {
@@ -17,8 +18,8 @@ class FindRecipes extends Cubit<FindRecipesState> {
     }
   }
 
-  void findAllByBean(String beanName) async {
-    final recipes = await recipeRepository.findAllByBean(beanName);
+  void findAllByBean(Bean bean) async {
+    final recipes = await recipeRepository.findAllByBean(bean);
 
     if (recipes.isEmpty) {
       emit(RecipesNotFound());

@@ -75,7 +75,7 @@ class StepItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(step.description),
-          Text('Duration ${step.duration.inSeconds}'),
+          Text('Duration ${step.duration}'),
         ],
       ),
     );

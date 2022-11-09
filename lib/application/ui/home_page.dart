@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Coffea'),
       ),
-      body: RouterOutlet(),
+      body: const RouterOutlet(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentNavBarItemIndex,
         items: const [
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: "Roasters",
-            icon: Icon(Icons.science_outlined),
+            icon: Icon(Icons.local_fire_department_outlined),
           ),
           // BottomNavigationBarItem(
           //   label: "Experiments",

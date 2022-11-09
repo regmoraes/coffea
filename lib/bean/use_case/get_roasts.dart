@@ -8,7 +8,7 @@ class FindRoasts extends Cubit<FindRoastsState> {
   FindRoasts(this.beanRepository) : super(FindRoastsState());
 
   void findAll() async {
-    final roasts = await beanRepository.getRoasts();
+    final roasts = await beanRepository.findRoasts();
 
     if (roasts.isEmpty) {
       emit(RoastsNotFound());
@@ -21,7 +21,7 @@ class FindRoasts extends Cubit<FindRoastsState> {
 class FindRoastsState {}
 
 class RoastsFound implements FindRoastsState {
-  final Set<Roast> roasts;
+  final List<Roast> roasts;
 
   RoastsFound(this.roasts);
 }

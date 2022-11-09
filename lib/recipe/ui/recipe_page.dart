@@ -14,8 +14,8 @@ class RecipePage extends StatelessWidget {
       appBar: AppBar(title: Text(recipe.name)),
       body: Column(
         children: [
-          Text('Método: ${recipe.method.name}'),
-          Text('Nome: ${recipe.bean.name}'),
+          Text('Método: ${recipe.method.value?.name}'),
+          Text('Nome: ${recipe.bean.value?.name}'),
           Text('Tamanho: ${recipe.grindSize.size}'),
           Text('Proporção: ${recipe.ratio.formattedAsRatio()}'),
           Text('Grão (g): ${recipe.beanQuantity.formattedAsGrams()}'),

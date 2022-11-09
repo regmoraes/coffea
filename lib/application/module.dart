@@ -4,9 +4,9 @@ import 'package:coffea/bean/ui/add_bean_page.dart';
 import 'package:coffea/bean/ui/beans_page.dart';
 import 'package:coffea/bean/ui/flavors_page.dart';
 import 'package:coffea/bean/use_case/add_bean.dart';
-import 'package:coffea/bean/use_case/find_beans.dart';
-import 'package:coffea/bean/use_case/find_flavors.dart';
-import 'package:coffea/bean/use_case/find_roasts.dart';
+import 'package:coffea/bean/use_case/get_beans.dart';
+import 'package:coffea/bean/use_case/get_flavors.dart';
+import 'package:coffea/bean/use_case/get_roasts.dart';
 import 'package:coffea/experiment/ui/experiments_page.dart';
 import 'package:coffea/method/repository/local_repository.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
@@ -17,7 +17,6 @@ import 'package:coffea/recipe/ui/make_recipe_page.dart';
 import 'package:coffea/recipe/ui/recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
 import 'package:coffea/recipe/use_case/add_recipe.dart';
-import 'package:coffea/recipe/use_case/find_grind_sizes.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:coffea/recipe/use_case/make_recipe.dart';
 import 'package:coffea/roaster/repository/local_repository.dart';
@@ -26,24 +25,26 @@ import 'package:coffea/roaster/ui/roasters_page.dart';
 import 'package:coffea/roaster/use_case/add_roaster.dart';
 import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:isar/isar.dart';
 
 class CoffeaModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.singleton((i) => BeanRepository()),
-        Bind.singleton((i) => MethodRepository()),
-        Bind.singleton((i) => RecipeRepository()),
-        Bind.singleton((i) => RoasterRepository()),
+        Bind.instance((i) => Isar.getInstance()),
+        Bind.singleton((i) => BeanRepository(i.get())),
+        Bind.singleton((i) => MethodRepository(i.get())),
+        Bind.singleton((i) => RecipeRepository(i.get())),
+        Bind.singleton((i) => RoasterRepository(i.get())),
         Bind.singleton((i) => AddBean(i.get())),
         Bind.singleton((i) => AddRecipe(i.get())),
         Bind.singleton((i) => AddRoaster(i.get())),
-        Bind.singleton((i) => FindBeans(i.get())),
-        Bind.singleton((i) => FindFlavors(i.get())),
-        Bind.singleton((i) => FindGrindSizes(i.get())),
-        Bind.singleton((i) => FindMethods(i.get())),
-        Bind.singleton((i) => FindRecipes(i.get())),
+        Bind.singleton((i) => GetBeans(i.get())),
+        Bind.singleton((i) => GetFlavors(i.get())),
+        // Bind.singleton((i) => FindGrindSizes(i.get())),
+        Bind.singleton((i) => GetMethods(i.get())),
+        Bind.singleton((i) => GetRecipes(i.get())),
         Bind.singleton((i) => FindRoasts(i.get())),
-        Bind.singleton((i) => FindRoasters(i.get())),
+        Bind.singleton((i) => GetRoasters(i.get())),
         Bind.factory((i) => MakeRecipe()),
       ];
 
@@ -80,7 +81,7 @@ class CoffeaModule extends Module {
         ),
         ChildRoute(
           '/recipes/steps',
-          child: (_, recipe) => const AddStepPage(),
+          child: (_, args) => AddStepPage(recipeBuilder: args.data),
         ),
       ];
 }

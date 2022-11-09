@@ -2,10 +2,10 @@ import 'package:coffea/method/method.dart';
 import 'package:coffea/method/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FindMethods extends Cubit<FindMethodsState> {
+class GetMethods extends Cubit<FindMethodsState> {
   final MethodRepository methodRepository;
 
-  FindMethods(this.methodRepository) : super(FindMethodsState());
+  GetMethods(this.methodRepository) : super(FindMethodsState());
 
   void findAll() async {
     final methods = await methodRepository.findAll();
@@ -21,7 +21,7 @@ class FindMethods extends Cubit<FindMethodsState> {
 class FindMethodsState {}
 
 class MethodsFound implements FindMethodsState {
-  final Set<Method> methods;
+  final List<Method> methods;
 
   MethodsFound(this.methods);
 }
