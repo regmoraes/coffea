@@ -1,4 +1,4 @@
-import 'package:coffea/method/method.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/method/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +8,7 @@ class GetMethods extends Cubit<FindMethodsState> {
   GetMethods(this.methodRepository) : super(FindMethodsState());
 
   void findAll() async {
-    final methods = await methodRepository.findAll();
+    final methods = await methodRepository.getAll();
 
     if (methods.isEmpty) {
       emit(MethodsNotFound());

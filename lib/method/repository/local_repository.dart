@@ -1,4 +1,4 @@
-import 'package:coffea/method/method.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:isar/isar.dart';
 
 class MethodRepository {
@@ -6,7 +6,7 @@ class MethodRepository {
 
   MethodRepository(this.database);
 
-  Future<List<Method>> findAll() {
+  Future<List<Method>> getAll() {
     return database.methods.where().findAll();
   }
 }

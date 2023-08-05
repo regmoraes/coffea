@@ -1,4 +1,4 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +10,7 @@ class GetBeans extends Cubit<FindBeansState> {
   void getAll() async {
     final beans = await beanRepository.findBeans();
 
-    if (beans.isNotEmpty) {
+    if (beans.isEmpty) {
       emit(BeansNotFound());
     } else {
       emit(BeansFound(beans));

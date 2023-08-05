@@ -1,6 +1,6 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/use_case/get_beans.dart';
-import 'package:coffea/method/method.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/model/ratio_calculator.dart';

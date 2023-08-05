@@ -1,4 +1,4 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/recipe/model/recipe.dart';
 import 'package:isar/isar.dart';
 

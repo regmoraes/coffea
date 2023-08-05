@@ -1,4 +1,4 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/recipe/model/ratio_calculator.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:flutter/material.dart';

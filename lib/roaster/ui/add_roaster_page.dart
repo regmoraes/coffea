@@ -1,4 +1,4 @@
-import 'package:coffea/roaster/roaster.dart';
+import 'package:coffea/roaster/model/roaster.dart';
 import 'package:coffea/roaster/use_case/add_roaster.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';

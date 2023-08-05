@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'producer.dart';
+part of 'roaster.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetProducerCollection on Isar {
-  IsarCollection<Producer> get producers => this.collection();
+extension GetRoasterCollection on Isar {
+  IsarCollection<Roaster> get roasters => this.collection();
 }
 
-const ProducerSchema = CollectionSchema(
-  name: r'Producer',
-  id: -4793928452610923069,
+const RoasterSchema = CollectionSchema(
+  name: r'Roaster',
+  id: 7393834688063918212,
   properties: {
     r'name': PropertySchema(
       id: 0,
@@ -23,22 +23,30 @@ const ProducerSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _producerEstimateSize,
-  serialize: _producerSerialize,
-  deserialize: _producerDeserialize,
-  deserializeProp: _producerDeserializeProp,
+  estimateSize: _roasterEstimateSize,
+  serialize: _roasterSerialize,
+  deserialize: _roasterDeserialize,
+  deserializeProp: _roasterDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'beans': LinkSchema(
+      id: -8178597701724840393,
+      name: r'beans',
+      target: r'Bean',
+      single: false,
+      linkName: r'roaster',
+    )
+  },
   embeddedSchemas: {},
-  getId: _producerGetId,
-  getLinks: _producerGetLinks,
-  attach: _producerAttach,
-  version: '3.0.2',
+  getId: _roasterGetId,
+  getLinks: _roasterGetLinks,
+  attach: _roasterAttach,
+  version: '3.1.0+1',
 );
 
-int _producerEstimateSize(
-  Producer object,
+int _roasterEstimateSize(
+  Roaster object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -47,8 +55,8 @@ int _producerEstimateSize(
   return bytesCount;
 }
 
-void _producerSerialize(
-  Producer object,
+void _roasterSerialize(
+  Roaster object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -56,20 +64,19 @@ void _producerSerialize(
   writer.writeString(offsets[0], object.name);
 }
 
-Producer _producerDeserialize(
+Roaster _roasterDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Producer(
-    reader.readString(offsets[0]),
-  );
+  final object = Roaster();
   object.id = id;
+  object.name = reader.readString(offsets[0]);
   return object;
 }
 
-P _producerDeserializeProp<P>(
+P _roasterDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -83,28 +90,29 @@ P _producerDeserializeProp<P>(
   }
 }
 
-Id _producerGetId(Producer object) {
-  return object.id ?? Isar.autoIncrement;
+Id _roasterGetId(Roaster object) {
+  return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _producerGetLinks(Producer object) {
-  return [];
+List<IsarLinkBase<dynamic>> _roasterGetLinks(Roaster object) {
+  return [object.beans];
 }
 
-void _producerAttach(IsarCollection<dynamic> col, Id id, Producer object) {
+void _roasterAttach(IsarCollection<dynamic> col, Id id, Roaster object) {
   object.id = id;
+  object.beans.attach(col, col.isar.collection<Bean>(), r'beans', id);
 }
 
-extension ProducerQueryWhereSort on QueryBuilder<Producer, Producer, QWhere> {
-  QueryBuilder<Producer, Producer, QAfterWhere> anyId() {
+extension RoasterQueryWhereSort on QueryBuilder<Roaster, Roaster, QWhere> {
+  QueryBuilder<Roaster, Roaster, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
-  QueryBuilder<Producer, Producer, QAfterWhereClause> idEqualTo(Id id) {
+extension RoasterQueryWhere on QueryBuilder<Roaster, Roaster, QWhereClause> {
+  QueryBuilder<Roaster, Roaster, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -113,7 +121,7 @@ extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<Roaster, Roaster, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -135,7 +143,7 @@ extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<Roaster, Roaster, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -144,7 +152,7 @@ extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<Roaster, Roaster, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -153,7 +161,7 @@ extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterWhereClause> idBetween(
+  QueryBuilder<Roaster, Roaster, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -170,25 +178,9 @@ extension ProducerQueryWhere on QueryBuilder<Producer, Producer, QWhereClause> {
   }
 }
 
-extension ProducerQueryFilter
-    on QueryBuilder<Producer, Producer, QFilterCondition> {
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
-    });
-  }
-
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
-    });
-  }
-
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idEqualTo(Id? value) {
+extension RoasterQueryFilter
+    on QueryBuilder<Roaster, Roaster, QFilterCondition> {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -197,8 +189,8 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idGreaterThan(
-    Id? value, {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> idGreaterThan(
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -210,8 +202,8 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idLessThan(
-    Id? value, {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> idLessThan(
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -223,9 +215,9 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> idBetween(
-    Id? lower,
-    Id? upper, {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -240,7 +232,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameEqualTo(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -253,7 +245,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameGreaterThan(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -268,7 +260,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameLessThan(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -283,7 +275,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameBetween(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -302,7 +294,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameStartsWith(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -315,7 +307,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameEndsWith(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -328,7 +320,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameContains(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -340,7 +332,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameMatches(
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -352,7 +344,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameIsEmpty() {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'name',
@@ -361,7 +353,7 @@ extension ProducerQueryFilter
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterFilterCondition> nameIsNotEmpty() {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'name',
@@ -371,56 +363,112 @@ extension ProducerQueryFilter
   }
 }
 
-extension ProducerQueryObject
-    on QueryBuilder<Producer, Producer, QFilterCondition> {}
+extension RoasterQueryObject
+    on QueryBuilder<Roaster, Roaster, QFilterCondition> {}
 
-extension ProducerQueryLinks
-    on QueryBuilder<Producer, Producer, QFilterCondition> {}
+extension RoasterQueryLinks
+    on QueryBuilder<Roaster, Roaster, QFilterCondition> {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beans(
+      FilterQuery<Bean> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'beans');
+    });
+  }
 
-extension ProducerQuerySortBy on QueryBuilder<Producer, Producer, QSortBy> {
-  QueryBuilder<Producer, Producer, QAfterSortBy> sortByName() {
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'beans', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'beans', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'beans', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'beans', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'beans', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Roaster, Roaster, QAfterFilterCondition> beansLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'beans', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
+
+extension RoasterQuerySortBy on QueryBuilder<Roaster, Roaster, QSortBy> {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterSortBy> sortByNameDesc() {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 }
 
-extension ProducerQuerySortThenBy
-    on QueryBuilder<Producer, Producer, QSortThenBy> {
-  QueryBuilder<Producer, Producer, QAfterSortBy> thenById() {
+extension RoasterQuerySortThenBy
+    on QueryBuilder<Roaster, Roaster, QSortThenBy> {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterSortBy> thenByName() {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<Producer, Producer, QAfterSortBy> thenByNameDesc() {
+  QueryBuilder<Roaster, Roaster, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 }
 
-extension ProducerQueryWhereDistinct
-    on QueryBuilder<Producer, Producer, QDistinct> {
-  QueryBuilder<Producer, Producer, QDistinct> distinctByName(
+extension RoasterQueryWhereDistinct
+    on QueryBuilder<Roaster, Roaster, QDistinct> {
+  QueryBuilder<Roaster, Roaster, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
@@ -428,15 +476,15 @@ extension ProducerQueryWhereDistinct
   }
 }
 
-extension ProducerQueryProperty
-    on QueryBuilder<Producer, Producer, QQueryProperty> {
-  QueryBuilder<Producer, int, QQueryOperations> idProperty() {
+extension RoasterQueryProperty
+    on QueryBuilder<Roaster, Roaster, QQueryProperty> {
+  QueryBuilder<Roaster, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Producer, String, QQueryOperations> nameProperty() {
+  QueryBuilder<Roaster, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });

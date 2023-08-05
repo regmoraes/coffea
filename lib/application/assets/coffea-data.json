@@ -14,12 +14,24 @@
     "Coarse"
   ],
   "roasts": [
-    "Custom Profile",
-    "Light",
-    "Medium-Light",
-    "Medium",
-    "Medium-Dark",
-    "Dark"
+    {
+      "type": "Custom Profile"
+    },
+    {
+      "type": "Light"
+    },
+    {
+      "type": "Medium-Light"
+    },
+    {
+      "type": "Medium"
+    },
+    {
+      "type": "Medium-Dark"
+    },
+    {
+      "type": "Dark"
+    }
   ],
   "flavors": [
     {

@@ -1,5 +1,5 @@
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/method/method.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/model/step.dart';
 import 'package:isar/isar.dart';

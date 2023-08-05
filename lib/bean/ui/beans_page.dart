@@ -3,13 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BeansPage extends StatelessWidget {
+class BeansPage extends StatefulWidget {
   const BeansPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final findBeans = Modular.get<GetBeans>();
+  State<BeansPage> createState() => _BeansPageState();
+}
 
+class _BeansPageState extends State<BeansPage> {
+  final findBeans = Modular.get<GetBeans>();
+
+  @override
+  void initState() {
+    super.initState();
+    findBeans.getAll();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<GetBeans, FindBeansState>(
         bloc: findBeans,

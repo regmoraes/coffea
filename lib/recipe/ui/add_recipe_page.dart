@@ -1,4 +1,4 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/recipe/model/recipe_builder.dart';
 import 'package:coffea/recipe/ui/recipe_details_tab.dart';
 import 'package:coffea/recipe/ui/recipe_steps_tab.dart';

@@ -1,4 +1,4 @@
-import 'package:coffea/roaster/roaster.dart';
+import 'package:coffea/roaster/model/roaster.dart';
 import 'package:isar/isar.dart';
 
 class RoasterRepository {
@@ -11,6 +11,6 @@ class RoasterRepository {
   }
 
   Future<int> addRoaster(Roaster roaster) {
-      return database.roasters.put(roaster);
+      return database.writeTxn(() => database.roasters.put(roaster));
   }
 }

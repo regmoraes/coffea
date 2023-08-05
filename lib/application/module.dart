@@ -4,10 +4,9 @@ import 'package:coffea/bean/ui/add_bean_page.dart';
 import 'package:coffea/bean/ui/beans_page.dart';
 import 'package:coffea/bean/ui/flavors_page.dart';
 import 'package:coffea/bean/use_case/add_bean.dart';
-import 'package:coffea/bean/use_case/get_beans.dart';
 import 'package:coffea/bean/use_case/get_flavors.dart';
+import 'package:coffea/bean/use_case/get_beans.dart';
 import 'package:coffea/bean/use_case/get_roasts.dart';
-import 'package:coffea/experiment/ui/experiments_page.dart';
 import 'package:coffea/method/repository/local_repository.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/repository/local_repository.dart';
@@ -29,59 +28,50 @@ import 'package:isar/isar.dart';
 
 class CoffeaModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.instance((i) => Isar.getInstance()),
-        Bind.singleton((i) => BeanRepository(i.get())),
-        Bind.singleton((i) => MethodRepository(i.get())),
-        Bind.singleton((i) => RecipeRepository(i.get())),
-        Bind.singleton((i) => RoasterRepository(i.get())),
-        Bind.singleton((i) => AddBean(i.get())),
-        Bind.singleton((i) => AddRecipe(i.get())),
-        Bind.singleton((i) => AddRoaster(i.get())),
-        Bind.singleton((i) => GetBeans(i.get())),
-        Bind.singleton((i) => GetFlavors(i.get())),
-        // Bind.singleton((i) => FindGrindSizes(i.get())),
-        Bind.singleton((i) => GetMethods(i.get())),
-        Bind.singleton((i) => GetRecipes(i.get())),
-        Bind.singleton((i) => FindRoasts(i.get())),
-        Bind.singleton((i) => GetRoasters(i.get())),
-        Bind.factory((i) => MakeRecipe()),
-      ];
+  void binds(Injector i) {
+    i.addInstance<Isar>(Isar.getInstance()!);
+    i.addSingleton(BeanRepository.new);
+    i.addSingleton(MethodRepository.new);
+    i.addSingleton(RecipeRepository.new);
+    i.addSingleton(RoasterRepository.new);
+    i.addSingleton(AddBean.new);
+    i.addSingleton(AddRecipe.new);
+    i.addSingleton(AddRoaster.new);
+    i.addSingleton(GetBeans.new);
+    i.addSingleton(GetFlavors.new);
+    i.addSingleton(GetMethods.new);
+    i.addSingleton(GetRecipes.new);
+    i.addSingleton(GetRoasts.new);
+    i.addSingleton(GetRoasters.new);
+    i.add(MakeRecipe.new);
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          Modular.initialRoute,
-          child: (context, args) => const HomePage(),
-          children: [
-            ChildRoute('/beans', child: (_, __) => const BeansPage()),
-            ChildRoute(
-              '/experiments',
-              child: (_, __) => const ExperimentsPage(),
-            ),
-            ChildRoute('/recipes', child: (_, __) => RecipesPage()),
-            ChildRoute('/roasters', child: (_, __) => const RoastersPage()),
-          ],
-        ),
-        ChildRoute('/add-bean', child: (_, __) => const AddBeanPage()),
-        ChildRoute('/add-recipe', child: (_, __) => const AddRecipePage()),
-        ChildRoute('/add-roaster', child: (_, __) => const AddRoasterPage()),
-        ChildRoute(
-          '/beans/recipes',
-          child: (_, args) => RecipesPage(bean: args.data),
-        ),
-        ChildRoute('/flavors', child: (_, args) => FlavorsPage(args.data)),
-        ChildRoute(
-          '/recipes/detail',
-          child: (_, recipe) => RecipePage(recipe.data),
-        ),
-        ChildRoute(
-          '/recipes/make',
-          child: (_, recipe) => MakeRecipePage(recipe.data),
-        ),
-        ChildRoute(
-          '/recipes/steps',
-          child: (_, args) => AddStepPage(recipeBuilder: args.data),
-        ),
-      ];
+  void routes(RouteManager r) {
+    r.child(
+      '/',
+      child: (context) => const HomePage(),
+      children: [
+        ChildRoute('/beans', child: (_) => const BeansPage()),
+        ChildRoute('/recipes', child: (_) => RecipesPage()),
+        ChildRoute('/roasters', child: (_) => const RoastersPage()),
+      ],
+    );
+    r.child('/add-bean', child: (_) => const AddBeanPage());
+    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-roaster', child: (_) => const AddRoasterPage());
+    r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
+    r.child('/flavors', child: (_) => FlavorsPage(r.args.data));
+    r.child('/recipes/detail', child: (_) => RecipePage(r.args.data));
+    r.child('/recipes/make', child: (_) => MakeRecipePage(r.args.data));
+    r.child('/recipes/steps', child: (_) => AddStepPage(recipeBuilder: r.args.data));
+    r.child('/add-bean', child: (_) => const AddBeanPage());
+    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-roaster', child: (_) => const AddRoasterPage());
+    r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
+    r.child('/flavors', child: (_) => FlavorsPage(r.args.data));
+    r.child('/recipes/detail', child: (_) => RecipePage(r.args.data));
+    r.child('/recipes/make', child: (_) => MakeRecipePage(r.args.data));
+    r.child('/recipes/steps', child: (_) => AddStepPage(recipeBuilder: r.args.data));
+  }
 }

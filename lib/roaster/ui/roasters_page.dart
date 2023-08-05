@@ -1,3 +1,4 @@
+import 'package:coffea/roaster/model/roaster.dart';
 import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,21 +23,17 @@ class _RoastersPageState extends State<RoastersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<GetRoasters, FindRoastersState>(
+      body: BlocBuilder<GetRoasters, List<Roaster>>(
         bloc: findRoasters,
         builder: (context, state) {
-          if (state is RoastersFound) {
             return ListView.builder(
-              itemCount: state.roasters.length,
+              itemCount: state.length,
               itemBuilder: (context, index) {
-                final bean = state.roasters.elementAt(index);
+                final bean = state.elementAt(index);
                 return ListTile(title: Text(bean.name));
               },
             );
-          } else {
-            return Container();
-          }
-        },
+          },
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

@@ -1,6 +1,6 @@
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/roast.dart';
-import 'package:coffea/roaster/roaster.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/roast.dart';
+import 'package:coffea/roaster/model/roaster.dart';
 import 'package:isar/isar.dart';
 
 part 'bean.g.dart';

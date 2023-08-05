@@ -1,5 +1,5 @@
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/ui/flavors_search.dart';
+import 'package:coffea/application/ui/search_filter.dart';
+import 'package:coffea/bean/model/flavor.dart';
 import 'package:coffea/bean/use_case/get_flavors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +16,7 @@ class FlavorsPage extends StatefulWidget {
 
 class _FlavorsState extends State<FlavorsPage> {
   final findFlavors = Modular.get<GetFlavors>();
-  final flavorsSearchFilter = SearchFilterBloc<Flavor>((searchTerm, flavor) {
+  final flavorsSearchFilter = SearchFilter<Flavor>((searchTerm, flavor) {
     return flavor.name.contains(searchTerm);
   });
   final flavorsSearchController = TextEditingController(text: 'Search');
@@ -61,7 +61,7 @@ class _FlavorsState extends State<FlavorsPage> {
               builder: (context, state) {
                 if (state is FlavorsFound) {
                   flavorsSearchFilter.original = state.flavors.toList();
-                  return BlocBuilder<SearchFilterBloc<Flavor>, List<Flavor>>(
+                  return BlocBuilder<SearchFilter<Flavor>, List<Flavor>>(
                     bloc: flavorsSearchFilter,
                     builder: (context, filtered) {
                       return ListView.builder(
