@@ -1,16 +1,16 @@
-import 'package:coffea/roaster/roaster.dart';
-
-final _roasters = {
-  Roaster('Ovelha Negra'),
-  Roaster('Net Cafés'),
-};
+import 'package:coffea/roaster/model/roaster.dart';
+import 'package:isar/isar.dart';
 
 class RoasterRepository {
-  Future<Set<Roaster>> findAll() async {
-    return _roasters;
+  final Isar database;
+
+  RoasterRepository(this.database);
+
+  Future<List<Roaster>> findAll() {
+    return database.roasters.where().findAll();
   }
 
-  addRoaster(Roaster roaster) {
-    _roasters.add(roaster);
+  Future<int> addRoaster(Roaster roaster) {
+      return database.writeTxn(() => database.roasters.put(roaster));
   }
 }

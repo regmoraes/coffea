@@ -1,6 +1,10 @@
-class Step {
-  final String description;
-  final Duration duration;
+import 'package:isar/isar.dart';
 
-  Step(this.description, this.duration);
+part 'step.g.dart';
+
+@embedded
+class Step {
+  late String description;
+
+  late int duration;
 }

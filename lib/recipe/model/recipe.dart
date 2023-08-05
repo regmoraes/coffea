@@ -1,35 +1,40 @@
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/method/method.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/model/step.dart';
+import 'package:isar/isar.dart';
 
+part 'recipe.g.dart';
+
+@collection
 class Recipe {
-  final String name;
-  final Method method;
-  final Bean bean;
-  final GrindSize grindSize;
-  final double ratio;
-  final double waterQuantity;
-  final double beanQuantity;
-  final List<Step> steps;
-  final String? comments;
+  Id id = Isar.autoIncrement;
 
+  late String name;
+
+  final method = IsarLink<Method>();
+
+  final bean = IsarLink<Bean>();
+
+  late GrindSize grindSize;
+
+  late double ratio;
+
+  late double waterQuantity;
+
+  late double beanQuantity;
+
+  final steps = List<Step>.empty(growable: true);
+
+  late String? comments;
+
+  @ignore
   late final Duration totalDuration;
 
-  Recipe({
-    required this.name,
-    required this.method,
-    required this.bean,
-    required this.grindSize,
-    required this.ratio,
-    required this.waterQuantity,
-    required this.beanQuantity,
-    required this.steps,
-    required this.comments,
-  }) {
+  Recipe() {
     totalDuration = steps.map((step) => step.duration).fold(
           const Duration(seconds: 0),
-          (totalDuration, duration) => totalDuration + duration,
+          (totalDuration, duration) => totalDuration + Duration(seconds: duration),
         );
   }
 }

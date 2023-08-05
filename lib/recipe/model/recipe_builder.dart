@@ -1,5 +1,5 @@
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/method/method.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/model/ratio_calculator.dart';
 import 'package:coffea/recipe/model/recipe.dart';
@@ -16,17 +16,16 @@ class RecipeBuilder {
   final RatioCalculator ratioCalculator = RatioCalculator();
 
   Recipe build() {
-    return Recipe(
-      name: name!,
-      method: method!,
-      bean: bean!,
-      grindSize: grindSize!,
-      steps: steps,
-      comments: comments,
-      ratio: ratioCalculator.ratio,
-      beanQuantity: ratioCalculator.beanQuantity,
-      waterQuantity: ratioCalculator.waterQuantity,
-    );
+    return Recipe()
+      ..name = name!
+      ..method.value = method!
+      ..bean.value = bean!
+      ..grindSize = grindSize!
+      ..steps.addAll(steps)
+      ..comments = comments
+      ..ratio = ratioCalculator.ratio
+      ..beanQuantity = ratioCalculator.beanQuantity
+      ..waterQuantity = ratioCalculator.waterQuantity;
   }
 
   @override

@@ -1,7 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'grind_size.g.dart';
+
+@embedded
 class GrindSize {
-  final String size;
-
-  GrindSize(this.size);
-
-  factory GrindSize.fromJson(dynamic value) => GrindSize(value as String);
+  late String size;
 }

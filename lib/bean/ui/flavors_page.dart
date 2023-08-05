@@ -1,6 +1,6 @@
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/ui/flavors_search.dart';
-import 'package:coffea/bean/use_case/find_flavors.dart';
+import 'package:coffea/application/ui/search_filter.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/use_case/get_flavors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,8 +15,8 @@ class FlavorsPage extends StatefulWidget {
 }
 
 class _FlavorsState extends State<FlavorsPage> {
-  final findFlavors = Modular.get<FindFlavors>();
-  final flavorsSearchFilter = SearchFilterBloc<Flavor>((searchTerm, flavor) {
+  final findFlavors = Modular.get<GetFlavors>();
+  final flavorsSearchFilter = SearchFilter<Flavor>((searchTerm, flavor) {
     return flavor.name.contains(searchTerm);
   });
   final flavorsSearchController = TextEditingController(text: 'Search');
@@ -25,16 +25,14 @@ class _FlavorsState extends State<FlavorsPage> {
   @override
   void initState() {
     super.initState();
-    findFlavors.findAllFlatten();
+    findFlavors.getAllFlatten();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: isSearching
-            ? TextField(onChanged: (text) => flavorsSearchFilter.add(text))
-            : const Text("Flavors"),
+        title: isSearching ? TextField(onChanged: (text) => flavorsSearchFilter.add(text)) : const Text("Flavors"),
         actions: [
           isSearching
               ? IconButton(
@@ -58,12 +56,12 @@ class _FlavorsState extends State<FlavorsPage> {
       body: Column(
         children: [
           Expanded(
-            child: BlocBuilder<FindFlavors, FindFlavorsState>(
+            child: BlocBuilder<GetFlavors, FindFlavorsState>(
               bloc: findFlavors,
               builder: (context, state) {
                 if (state is FlavorsFound) {
                   flavorsSearchFilter.original = state.flavors.toList();
-                  return BlocBuilder<SearchFilterBloc<Flavor>, List<Flavor>>(
+                  return BlocBuilder<SearchFilter<Flavor>, List<Flavor>>(
                     bloc: flavorsSearchFilter,
                     builder: (context, filtered) {
                       return ListView.builder(
@@ -71,16 +69,16 @@ class _FlavorsState extends State<FlavorsPage> {
                         itemCount: filtered.length,
                         itemBuilder: (context, index) {
                           final flavor = filtered.elementAt(index);
+                          final flavorColor = Color(flavor.color);
                           return ListTile(
                             key: ValueKey(flavor.name),
                             title: Text(
                               flavor.name,
                               style: TextStyle(
-                                color:
-                                    _getTextColorForFlavorColor(flavor.color),
+                                color: _getTextColorForFlavorColor(flavorColor),
                               ),
                             ),
-                            tileColor: flavor.color,
+                            tileColor: flavorColor,
                             trailing: Checkbox(
                               value: widget.beanFlavors.contains(flavor),
                               onChanged: (selected) {
@@ -115,7 +113,5 @@ class _FlavorsState extends State<FlavorsPage> {
 }
 
 Color _getTextColorForFlavorColor(Color color) {
-  return ThemeData.estimateBrightnessForColor(color) == Brightness.dark
-      ? Colors.white
-      : Colors.black;
+  return ThemeData.estimateBrightnessForColor(color) == Brightness.dark ? Colors.white : Colors.black;
 }

@@ -1,6 +1,6 @@
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/bean/use_case/find_beans.dart';
-import 'package:coffea/method/method.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/use_case/get_beans.dart';
+import 'package:coffea/method/model/method.dart';
 import 'package:coffea/method/use_case/find_methods.dart';
 import 'package:coffea/recipe/model/grind_size.dart';
 import 'package:coffea/recipe/model/ratio_calculator.dart';
@@ -23,9 +23,9 @@ class RecipeContentTab extends StatefulWidget {
 
 class RecipeContentTabState extends State<RecipeContentTab> {
   final addRecipe = Modular.get<AddRecipe>();
-  final findMethods = Modular.get<FindMethods>();
-  final findBeans = Modular.get<FindBeans>();
-  final findGrindSizes = Modular.get<FindGrindSizes>();
+  final findMethods = Modular.get<GetMethods>();
+  final findBeans = Modular.get<GetBeans>();
+  // final findGrindSizes = Modular.get<FindGrindSizes>();
   final _formData = _AddRecipeFormData(GlobalKey<FormState>());
   late final TextEditingController _beanQuantityController =
       TextEditingController(
@@ -40,11 +40,11 @@ class RecipeContentTabState extends State<RecipeContentTab> {
   void initState() {
     super.initState();
     if (widget.recipeBuilder.bean == null) {
-      findBeans.findAll();
+      findBeans.getAll();
     }
     findMethods.findAll();
-    findBeans.findAll();
-    findGrindSizes.findAll();
+    findBeans.getAll();
+    // findGrindSizes.getAll();
 
     // _beanQuantityController =
   }
@@ -71,7 +71,7 @@ class RecipeContentTabState extends State<RecipeContentTab> {
                     : 'Name must not be empty';
               },
             ),
-            BlocBuilder<FindMethods, FindMethodsState>(
+            BlocBuilder<GetMethods, FindMethodsState>(
               bloc: findMethods,
               builder: (context, state) {
                 return DropdownButtonFormField<Method>(
@@ -100,7 +100,7 @@ class RecipeContentTabState extends State<RecipeContentTab> {
                 );
               },
             ),
-            BlocBuilder<FindBeans, FindBeansState>(
+            BlocBuilder<GetBeans, FindBeansState>(
               bloc: findBeans,
               builder: (context, state) {
                 return DropdownButtonFormField<Bean>(
@@ -131,35 +131,35 @@ class RecipeContentTabState extends State<RecipeContentTab> {
                 );
               },
             ),
-            BlocBuilder<FindGrindSizes, FindGrindSizesState>(
-              bloc: findGrindSizes,
-              builder: (context, state) {
-                return DropdownButtonFormField<GrindSize>(
-                  hint: const Text("Grind Size"),
-                  value: _formData.recipeBuilder.grindSize,
-                  onChanged: (grindSize) {
-                    setState(() {
-                      if (grindSize != null) {
-                        _formData.recipeBuilder.grindSize;
-                      }
-                    });
-                  },
-                  items: state is GrindSizesFound
-                      ? state.grindSizes
-                          .map(
-                            (grindSize) => DropdownMenuItem(
-                              value: grindSize,
-                              child: Text(grindSize.size),
-                              onTap: () {
-                                _formData.recipeBuilder.grindSize = grindSize;
-                              },
-                            ),
-                          )
-                          .toList()
-                      : List.empty(),
-                );
-              },
-            ),
+            // BlocBuilder<FindGrindSizes, FindGrindSizesState>(
+            //   bloc: findGrindSizes,
+            //   builder: (context, state) {
+            //     return DropdownButtonFormField<GrindSize>(
+            //       hint: const Text("Grind Size"),
+            //       value: _formData.recipeBuilder.grindSize,
+            //       onChanged: (grindSize) {
+            //         setState(() {
+            //           if (grindSize != null) {
+            //             _formData.recipeBuilder.grindSize;
+            //           }
+            //         });
+            //       },
+            //       items: state is GrindSizesFound
+            //           ? state.grindSizes
+            //               .map(
+            //                 (grindSize) => DropdownMenuItem(
+            //                   value: grindSize,
+            //                   child: Text(grindSize.size),
+            //                   onTap: () {
+            //                     _formData.recipeBuilder.grindSize = grindSize;
+            //                   },
+            //                 ),
+            //               )
+            //               .toList()
+            //           : List.empty(),
+            //     );
+            //   },
+            // ),
             TextFormField(
               controller: _waterQuantityController,
               decoration: const InputDecoration(

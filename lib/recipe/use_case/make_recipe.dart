@@ -29,7 +29,7 @@ class MakeRecipe extends Cubit<RecipeState> {
   void _onTimerTick(Timer timer) {
     final elapsedTimeInSeconds = timer.tick;
 
-    if (elapsedTimeInSeconds >= _currentStep.duration.inSeconds) {
+    if (elapsedTimeInSeconds >= _currentStep.duration) {
       _stopTimer();
       nextStep();
     } else {
@@ -38,7 +38,7 @@ class MakeRecipe extends Cubit<RecipeState> {
           _currentStep,
           elapsedStepDuration: Duration(seconds: elapsedTimeInSeconds),
           remainingStepDuration: Duration(
-            seconds: _currentStep.duration.inSeconds - elapsedTimeInSeconds,
+            seconds: _currentStep.duration - elapsedTimeInSeconds,
           ),
         ),
       );

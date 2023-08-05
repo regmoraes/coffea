@@ -1,15 +1,14 @@
-import 'package:coffea/bean/bean.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FindBeans extends Cubit<FindBeansState> {
-
+class GetBeans extends Cubit<FindBeansState> {
   final BeanRepository beanRepository;
 
-  FindBeans(this.beanRepository) : super(FindBeansState());
+  GetBeans(this.beanRepository) : super(FindBeansState());
 
-  void findAll() async {
-    final beans = await beanRepository.getBeans();
+  void getAll() async {
+    final beans = await beanRepository.findBeans();
 
     if (beans.isEmpty) {
       emit(BeansNotFound());
@@ -22,7 +21,7 @@ class FindBeans extends Cubit<FindBeansState> {
 class FindBeansState {}
 
 class BeansFound implements FindBeansState {
-  final Set<Bean> beans;
+  final List<Bean> beans;
 
   BeansFound(this.beans);
 }

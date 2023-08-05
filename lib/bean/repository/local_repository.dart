@@ -1,32 +1,26 @@
-import 'package:coffea/application/repository.dart';
-import 'package:coffea/bean/bean.dart';
-import 'package:coffea/bean/flavor.dart';
-import 'package:coffea/bean/roast.dart';
+import 'package:coffea/bean/model/bean.dart';
+import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/roast.dart';
+import 'package:isar/isar.dart';
 
 class BeanRepository {
-  final _beans = <Bean>{};
+  final Isar database;
 
-  BeanRepository() {
-    loadCoffeaData();
+  BeanRepository(this.database);
+
+  Future<int> addBean(Bean bean) async {
+    return await database.writeTxnSync(() => database.beans.putSync(bean));
   }
 
-  Future<void> addBean(Bean bean) async {
-    _beans.add(bean);
+  Future<List<Bean>> findBeans() {
+    return database.beans.where().findAll();
   }
 
-  Future<Set<Bean>> getBeans() async {
-    return _beans;
+  Future<List<Flavor>> findFlavors() {
+    return database.flavors.where().findAll();
   }
 
-  Future<Set<Flavor>> getFlavors() async {
-    return Set<Flavor>.from(
-      coffeaData["flavors"].map((flavorJson) => Flavor.fromJson(flavorJson)),
-    );
-  }
-
-  Future<Set<Roast>> getRoasts() async {
-    return Set<Roast>.from(
-      coffeaData["roasts"].map((roast) => Roast.fromJson(roast)),
-    );
+  Future<List<Roast>> findRoasts() {
+    return database.roasts.where().findAll();
   }
 }
