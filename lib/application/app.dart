@@ -9,8 +9,7 @@ class CoffeaApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Coffea',
       theme: ThemeData(primarySwatch: Colors.blue),
-      routeInformationParser: Modular.routeInformationParser,
-      routerDelegate: Modular.routerDelegate,
+      routerConfig: Modular.routerConfig,
     );
   }
 }

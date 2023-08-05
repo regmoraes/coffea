@@ -1,9 +1,12 @@
+import 'package:coffea/recipe/model/recipe_builder.dart';
 import 'package:coffea/recipe/model/step_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AddStepPage extends StatefulWidget {
-  const AddStepPage({Key? key}) : super(key: key);
+  final RecipeBuilder recipeBuilder;
+
+  const AddStepPage({Key? key, required this.recipeBuilder}) : super(key: key);
 
   @override
   AddStepPageState createState() => AddStepPageState();
@@ -17,7 +20,7 @@ class AddStepPageState extends State<AddStepPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("New Step")),
       body: Container(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Form(
           key: _formData.formKey,
           child: Column(
@@ -27,7 +30,7 @@ class AddStepPageState extends State<AddStepPage> {
                   border: UnderlineInputBorder(),
                   labelText: 'Name',
                 ),
-                onFieldSubmitted: (text) {
+                onChanged: (text) {
                   setState(() => _formData.stepBuilder.description = text);
                 },
                 validator: (value) {
@@ -45,7 +48,7 @@ class AddStepPageState extends State<AddStepPage> {
                   decimal: false,
                   signed: false,
                 ),
-                onFieldSubmitted: (text) {
+                onChanged: (text) {
                   setState(() {
                     _formData.stepBuilder.duration = Duration(
                       seconds: int.parse(text),
@@ -60,7 +63,8 @@ class AddStepPageState extends State<AddStepPage> {
                 onPressed: () {
                   if (_formData.isValid) {
                     final step = _formData.stepBuilder.build();
-                    Modular.to.pop(step);
+                    widget.recipeBuilder.steps.add(step);
+                    Modular.to.pop();
                   }
                 },
                 child: const Text('Submit'),

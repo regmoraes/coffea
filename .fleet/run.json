@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "run config debug",
+            "program": "powershell", // For Windows
+            "args": [
+                "flutter", "run", "--debug"
+            ],
+        },
+
+    ]
+}

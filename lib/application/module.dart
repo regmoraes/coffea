@@ -26,61 +26,55 @@ import 'package:coffea/roaster/ui/roasters_page.dart';
 import 'package:coffea/roaster/use_case/add_roaster.dart';
 import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:auto_injector/auto_injector.dart';
 
 class CoffeaModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind.singleton((i) => BeanRepository()),
-        Bind.singleton((i) => MethodRepository()),
-        Bind.singleton((i) => RecipeRepository()),
-        Bind.singleton((i) => RoasterRepository()),
-        Bind.singleton((i) => AddBean(i.get())),
-        Bind.singleton((i) => AddRecipe(i.get())),
-        Bind.singleton((i) => AddRoaster(i.get())),
-        Bind.singleton((i) => FindBeans(i.get())),
-        Bind.singleton((i) => FindFlavors(i.get())),
-        Bind.singleton((i) => FindGrindSizes(i.get())),
-        Bind.singleton((i) => FindMethods(i.get())),
-        Bind.singleton((i) => FindRecipes(i.get())),
-        Bind.singleton((i) => FindRoasts(i.get())),
-        Bind.singleton((i) => FindRoasters(i.get())),
-        Bind.factory((i) => MakeRecipe()),
-      ];
+  void binds(Injector i) {
+    i.addSingleton(BeanRepository.new);
+    i.addSingleton(MethodRepository.new);
+    i.addSingleton(RecipeRepository.new);
+    i.addSingleton(RoasterRepository.new);
+    i.addSingleton(AddBean.new);
+    i.addSingleton(AddRecipe.new);
+    i.addSingleton(AddRoaster.new);
+    i.addSingleton(FindBeans.new);
+    i.addSingleton(FindFlavors.new);
+    i.addSingleton(FindGrindSizes.new);
+    i.addSingleton(FindMethods.new);
+    i.addSingleton(FindRecipes.new);
+    i.addSingleton(FindRoasts.new);
+    i.addSingleton(FindRoasters.new);
+    i.add(MakeRecipe.new);
+  }
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute(
-          Modular.initialRoute,
-          child: (context, args) => const HomePage(),
-          children: [
-            ChildRoute('/beans', child: (_, __) => const BeansPage()),
-            ChildRoute(
-              '/experiments',
-              child: (_, __) => const ExperimentsPage(),
-            ),
-            ChildRoute('/recipes', child: (_, __) => RecipesPage()),
-            ChildRoute('/roasters', child: (_, __) => const RoastersPage()),
-          ],
-        ),
-        ChildRoute('/add-bean', child: (_, __) => const AddBeanPage()),
-        ChildRoute('/add-recipe', child: (_, __) => const AddRecipePage()),
-        ChildRoute('/add-roaster', child: (_, __) => const AddRoasterPage()),
-        ChildRoute(
-          '/beans/recipes',
-          child: (_, args) => RecipesPage(bean: args.data),
-        ),
-        ChildRoute('/flavors', child: (_, args) => FlavorsPage(args.data)),
-        ChildRoute(
-          '/recipes/detail',
-          child: (_, recipe) => RecipePage(recipe.data),
-        ),
-        ChildRoute(
-          '/recipes/make',
-          child: (_, recipe) => MakeRecipePage(recipe.data),
-        ),
-        ChildRoute(
-          '/recipes/steps',
-          child: (_, recipe) => const AddStepPage(),
-        ),
-      ];
+  void routes(RouteManager r) {
+    r.child(
+      '/',
+      child: (context) => const HomePage(),
+      children: [
+        ChildRoute('/beans', child: (_) => const BeansPage()),
+        ChildRoute('/experiments', child: (_) => const ExperimentsPage()),
+        ChildRoute('/recipes', child: (_) => RecipesPage()),
+        ChildRoute('/roasters', child: (_) => const RoastersPage()),
+      ],
+    );
+    r.child('/add-bean', child: (_) => const AddBeanPage());
+    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-roaster', child: (_) => const AddRoasterPage());
+    r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
+    r.child('/flavors', child: (_) => FlavorsPage(r.args.data));
+    r.child('/recipes/detail', child: (_) => RecipePage(r.args.data));
+    r.child('/recipes/make', child: (_) => MakeRecipePage(r.args.data));
+    r.child('/recipes/steps', child: (_) => AddStepPage(recipeBuilder: r.args.data));
+    r.child('/add-bean', child: (_) => const AddBeanPage());
+    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-roaster', child: (_) => const AddRoasterPage());
+    r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
+    r.child('/flavors', child: (_) => FlavorsPage(r.args.data));
+    r.child('/recipes/detail', child: (_) => RecipePage(r.args.data));
+    r.child('/recipes/make', child: (_) => MakeRecipePage(r.args.data));
+    r.child('/recipes/steps', child: (_) => AddStepPage(recipeBuilder: r.args.data));
+  }
 }

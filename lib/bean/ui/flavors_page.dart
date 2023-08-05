@@ -63,11 +63,9 @@ class _FlavorsState extends State<FlavorsPage> {
               builder: (context, state) {
                 if (state is FlavorsFound) {
                   flavorsSearchFilter.original = state.flavors.toList();
-                  print(state.flavors.map((e) => e.toString()));
                   return BlocBuilder<SearchFilterBloc<Flavor>, List<Flavor>>(
                     bloc: flavorsSearchFilter,
                     builder: (context, filtered) {
-                      print(filtered);
                       return ListView.builder(
                         shrinkWrap: true,
                         itemCount: filtered.length,

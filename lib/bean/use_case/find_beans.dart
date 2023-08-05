@@ -3,6 +3,7 @@ import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FindBeans extends Cubit<FindBeansState> {
+
   final BeanRepository beanRepository;
 
   FindBeans(this.beanRepository) : super(FindBeansState());

@@ -1,14 +1,12 @@
 import 'package:coffea/roaster/roaster.dart';
 
 final _roasters = {
-  Roaster('Alfredo'),
-  Roaster('João'),
-  Roaster('Maria'),
+  Roaster('Ovelha Negra'),
+  Roaster('Net Cafés'),
 };
 
 class RoasterRepository {
   Future<Set<Roaster>> findAll() async {
-    print('Getting Roasters: $_roasters');
     return _roasters;
   }
 
