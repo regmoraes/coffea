@@ -1,4 +1,4 @@
-import 'package:coffea/bean/use_case/get_beans.dart';
+import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,18 +11,18 @@ class BeansPage extends StatefulWidget {
 }
 
 class _BeansPageState extends State<BeansPage> {
-  final findBeans = Modular.get<GetBeans>();
+  final findBeans = Modular.get<FindBeans>();
 
   @override
   void initState() {
     super.initState();
-    findBeans.getAll();
+    findBeans.findAll();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<GetBeans, FindBeansState>(
+      body: BlocBuilder<FindBeans, FindBeansState>(
         bloc: findBeans,
         builder: (context, state) {
           if (state is BeansFound) {
@@ -42,7 +42,7 @@ class _BeansPageState extends State<BeansPage> {
         child: const Icon(Icons.add),
         onPressed: () async {
           await Modular.to.pushNamed('/add-bean');
-          findBeans.getAll();
+          findBeans.findAll();
         },
       ),
     );

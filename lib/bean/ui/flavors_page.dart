@@ -1,6 +1,6 @@
 import 'package:coffea/application/ui/search_filter.dart';
 import 'package:coffea/bean/model/flavor.dart';
-import 'package:coffea/bean/use_case/get_flavors.dart';
+import 'package:coffea/bean/use_case/find_flavors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,7 +15,7 @@ class FlavorsPage extends StatefulWidget {
 }
 
 class _FlavorsState extends State<FlavorsPage> {
-  final findFlavors = Modular.get<GetFlavors>();
+  final findFlavors = Modular.get<FindFlavors>();
   final flavorsSearchFilter = SearchFilter<Flavor>((searchTerm, flavor) {
     return flavor.name.contains(searchTerm);
   });
@@ -25,7 +25,7 @@ class _FlavorsState extends State<FlavorsPage> {
   @override
   void initState() {
     super.initState();
-    findFlavors.getAllFlatten();
+    findFlavors.findAllFlatten();
   }
 
   @override
@@ -56,7 +56,7 @@ class _FlavorsState extends State<FlavorsPage> {
       body: Column(
         children: [
           Expanded(
-            child: BlocBuilder<GetFlavors, FindFlavorsState>(
+            child: BlocBuilder<FindFlavors, FindFlavorsState>(
               bloc: findFlavors,
               builder: (context, state) {
                 if (state is FlavorsFound) {

@@ -1,6 +1,5 @@
 const minRatio = 1 / 36; // 1:36
 const maxRatio = 1 / 2; // 1:2
-const ratioSteps = 34;
 
 const minBeanQuantity = 0.75;
 const maxBeanQuantity = 1000.0;
@@ -57,7 +56,7 @@ class RatioCalculator {
 
   @override
   String toString() {
-    return 'BeanWaterRatio{_waterQuantity: $_waterQuantity, _beanQuantity: $_beanQuantity, _beanWaterRatio: $_ratio}';
+    return 'RatioCalculator{_waterQuantity: $_waterQuantity, _beanQuantity: $_beanQuantity, _ratio: $_ratio}';
   }
 }
 

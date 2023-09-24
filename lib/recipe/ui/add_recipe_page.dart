@@ -32,7 +32,7 @@ class AddRecipePageState extends State<AddRecipePage> {
         ),
         body: TabBarView(
           children: [
-            RecipeContentTab(recipeBuilder: _formData.recipeBuilder),
+            RecipeDetailsTab(recipeBuilder: _formData.recipeBuilder),
             RecipeStepsTab(recipeBuilder: _formData.recipeBuilder),
           ],
         ),

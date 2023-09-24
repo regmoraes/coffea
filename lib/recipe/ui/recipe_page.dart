@@ -16,7 +16,7 @@ class RecipePage extends StatelessWidget {
         children: [
           Text('Método: ${recipe.method.value?.name}'),
           Text('Nome: ${recipe.bean.value?.name}'),
-          Text('Tamanho: ${recipe.grindSize.size}'),
+          Text('Tamanho: ${recipe.grindSize.value?.name}'),
           Text('Proporção: ${recipe.ratio.formattedAsRatio()}'),
           Text('Grão (g): ${recipe.beanQuantity.formattedAsGrams()}'),
           Text('Quantidade de água: ${recipe.waterQuantity.formattedAsMl()}'),

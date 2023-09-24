@@ -1,4 +1,4 @@
-import 'package:coffea/bean/use_case/get_beans.dart';
+import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,10 +8,10 @@ class BeanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final findBeans = Modular.get<GetBeans>();
+    final findBeans = Modular.get<FindBeans>();
 
     return Scaffold(
-      body: BlocBuilder<GetBeans, FindBeansState>(
+      body: BlocBuilder<FindBeans, FindBeansState>(
         bloc: findBeans,
         builder: (context, state) {
           if (state is BeansFound) {
@@ -31,7 +31,7 @@ class BeanPage extends StatelessWidget {
         child: const Icon(Icons.add),
         onPressed: () async {
           await Modular.to.pushNamed('/add-bean');
-          findBeans.getAll();
+          findBeans.findAll();
         },
       ),
     );

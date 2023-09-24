@@ -27,30 +27,24 @@ const RecipeSchema = CollectionSchema(
       name: r'comments',
       type: IsarType.string,
     ),
-    r'grindSize': PropertySchema(
-      id: 2,
-      name: r'grindSize',
-      type: IsarType.object,
-      target: r'GrindSize',
-    ),
     r'name': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'name',
       type: IsarType.string,
     ),
     r'ratio': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'ratio',
       type: IsarType.double,
     ),
     r'steps': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'steps',
       type: IsarType.objectList,
       target: r'Step',
     ),
     r'waterQuantity': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'waterQuantity',
       type: IsarType.double,
     )
@@ -73,9 +67,15 @@ const RecipeSchema = CollectionSchema(
       name: r'bean',
       target: r'Bean',
       single: true,
+    ),
+    r'grindSize': LinkSchema(
+      id: -529733505614045960,
+      name: r'grindSize',
+      target: r'GrindSize',
+      single: true,
     )
   },
-  embeddedSchemas: {r'GrindSize': GrindSizeSchema, r'Step': StepSchema},
+  embeddedSchemas: {r'Step': StepSchema},
   getId: _recipeGetId,
   getLinks: _recipeGetLinks,
   attach: _recipeAttach,
@@ -94,9 +94,6 @@ int _recipeEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 +
-      GrindSizeSchema.estimateSize(
-          object.grindSize, allOffsets[GrindSize]!, allOffsets);
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.steps.length * 3;
   {
@@ -117,21 +114,15 @@ void _recipeSerialize(
 ) {
   writer.writeDouble(offsets[0], object.beanQuantity);
   writer.writeString(offsets[1], object.comments);
-  writer.writeObject<GrindSize>(
-    offsets[2],
-    allOffsets,
-    GrindSizeSchema.serialize,
-    object.grindSize,
-  );
-  writer.writeString(offsets[3], object.name);
-  writer.writeDouble(offsets[4], object.ratio);
+  writer.writeString(offsets[2], object.name);
+  writer.writeDouble(offsets[3], object.ratio);
   writer.writeObjectList<Step>(
-    offsets[5],
+    offsets[4],
     allOffsets,
     StepSchema.serialize,
     object.steps,
   );
-  writer.writeDouble(offsets[6], object.waterQuantity);
+  writer.writeDouble(offsets[5], object.waterQuantity);
 }
 
 Recipe _recipeDeserialize(
@@ -143,16 +134,10 @@ Recipe _recipeDeserialize(
   final object = Recipe();
   object.beanQuantity = reader.readDouble(offsets[0]);
   object.comments = reader.readStringOrNull(offsets[1]);
-  object.grindSize = reader.readObjectOrNull<GrindSize>(
-        offsets[2],
-        GrindSizeSchema.deserialize,
-        allOffsets,
-      ) ??
-      GrindSize();
   object.id = id;
-  object.name = reader.readString(offsets[3]);
-  object.ratio = reader.readDouble(offsets[4]);
-  object.waterQuantity = reader.readDouble(offsets[6]);
+  object.name = reader.readString(offsets[2]);
+  object.ratio = reader.readDouble(offsets[3]);
+  object.waterQuantity = reader.readDouble(offsets[5]);
   return object;
 }
 
@@ -168,17 +153,10 @@ P _recipeDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readObjectOrNull<GrindSize>(
-            offset,
-            GrindSizeSchema.deserialize,
-            allOffsets,
-          ) ??
-          GrindSize()) as P;
-    case 3:
       return (reader.readString(offset)) as P;
-    case 4:
+    case 3:
       return (reader.readDouble(offset)) as P;
-    case 5:
+    case 4:
       return (reader.readObjectList<Step>(
             offset,
             StepSchema.deserialize,
@@ -186,7 +164,7 @@ P _recipeDeserializeProp<P>(
             Step(),
           ) ??
           []) as P;
-    case 6:
+    case 5:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -198,13 +176,15 @@ Id _recipeGetId(Recipe object) {
 }
 
 List<IsarLinkBase<dynamic>> _recipeGetLinks(Recipe object) {
-  return [object.method, object.bean];
+  return [object.method, object.bean, object.grindSize];
 }
 
 void _recipeAttach(IsarCollection<dynamic> col, Id id, Recipe object) {
   object.id = id;
   object.method.attach(col, col.isar.collection<Method>(), r'method', id);
   object.bean.attach(col, col.isar.collection<Bean>(), r'bean', id);
+  object.grindSize
+      .attach(col, col.isar.collection<GrindSize>(), r'grindSize', id);
 }
 
 extension RecipeQueryWhereSort on QueryBuilder<Recipe, Recipe, QWhere> {
@@ -882,13 +862,6 @@ extension RecipeQueryFilter on QueryBuilder<Recipe, Recipe, QFilterCondition> {
 }
 
 extension RecipeQueryObject on QueryBuilder<Recipe, Recipe, QFilterCondition> {
-  QueryBuilder<Recipe, Recipe, QAfterFilterCondition> grindSize(
-      FilterQuery<GrindSize> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'grindSize');
-    });
-  }
-
   QueryBuilder<Recipe, Recipe, QAfterFilterCondition> stepsElement(
       FilterQuery<Step> q) {
     return QueryBuilder.apply(this, (query) {
@@ -921,6 +894,19 @@ extension RecipeQueryLinks on QueryBuilder<Recipe, Recipe, QFilterCondition> {
   QueryBuilder<Recipe, Recipe, QAfterFilterCondition> beanIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'bean', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Recipe, Recipe, QAfterFilterCondition> grindSize(
+      FilterQuery<GrindSize> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'grindSize');
+    });
+  }
+
+  QueryBuilder<Recipe, Recipe, QAfterFilterCondition> grindSizeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'grindSize', 0, true, 0, true);
     });
   }
 }
@@ -1111,12 +1097,6 @@ extension RecipeQueryProperty on QueryBuilder<Recipe, Recipe, QQueryProperty> {
   QueryBuilder<Recipe, String?, QQueryOperations> commentsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'comments');
-    });
-  }
-
-  QueryBuilder<Recipe, GrindSize, QQueryOperations> grindSizeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'grindSize');
     });
   }
 

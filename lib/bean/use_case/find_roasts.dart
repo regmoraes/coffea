@@ -2,12 +2,12 @@ import 'package:coffea/bean/model/roast.dart';
 import 'package:coffea/bean/repository/local_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GetRoasts extends Cubit<GetRoastsState> {
+class FindRoasts extends Cubit<GetRoastsState> {
   final BeanRepository beanRepository;
 
-  GetRoasts(this.beanRepository) : super(GetRoastsState());
+  FindRoasts(this.beanRepository) : super(GetRoastsState());
 
-  void getAll() async {
+  void findAll() async {
     final roasts = await beanRepository.findRoasts();
 
     if (roasts.isEmpty) {

@@ -1,6 +1,6 @@
 import 'package:coffea/bean/model/bean.dart';
-import 'package:coffea/method/model/method.dart';
-import 'package:coffea/recipe/model/grind_size.dart';
+import 'package:coffea/bean/model/grind_size.dart';
+import 'package:coffea/recipe/model/method.dart';
 import 'package:coffea/recipe/model/step.dart';
 import 'package:isar/isar.dart';
 
@@ -16,7 +16,7 @@ class Recipe {
 
   final bean = IsarLink<Bean>();
 
-  late GrindSize grindSize;
+  final grindSize =  IsarLink<GrindSize>();
 
   late double ratio;
 

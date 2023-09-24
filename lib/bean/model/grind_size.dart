@@ -2,7 +2,9 @@ import 'package:isar/isar.dart';
 
 part 'grind_size.g.dart';
 
-@embedded
+@collection
 class GrindSize {
-  late String size;
+  Id id = Isar.autoIncrement;
+
+  late String name;
 }

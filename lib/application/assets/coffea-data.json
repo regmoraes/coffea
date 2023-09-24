@@ -1,17 +1,34 @@
 {
   "methods": [
-    "Aero Press",
-    "Aero Press Inverted",
-    "Clever",
-    "French Press",
-    "V60"
+    {
+      "name": "Aero Press Inverted"
+    },
+    {
+      "name": "Clever"
+    },
+    {
+      "name": "French Press"
+    },
+    {
+      "name": "V60"
+    }
   ],
   "grind_sizes": [
-    "Fine",
-    "Medium-Fine",
-    "Medium",
-    "Medium-Coarse",
-    "Coarse"
+    {
+      "name": "Fine"
+    },
+    {
+      "name": "Medium-Fine"
+    },
+    {
+      "name": "Medium"
+    },
+    {
+      "name": "Medium-Coarse"
+    },
+    {
+      "name": "Coarse"
+    }
   ],
   "roasts": [
     {

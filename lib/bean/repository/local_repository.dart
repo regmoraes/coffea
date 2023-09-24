@@ -1,5 +1,6 @@
 import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/model/flavor.dart';
+import 'package:coffea/bean/model/grind_size.dart';
 import 'package:coffea/bean/model/roast.dart';
 import 'package:isar/isar.dart';
 
@@ -18,6 +19,10 @@ class BeanRepository {
 
   Future<List<Flavor>> findFlavors() {
     return database.flavors.where().findAll();
+  }
+
+  Future<List<GrindSize>> findGrindSizes() {
+    return database.grindSizes.where().findAll();
   }
 
   Future<List<Roast>> findRoasts() {

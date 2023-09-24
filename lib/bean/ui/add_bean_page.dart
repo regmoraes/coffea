@@ -2,8 +2,8 @@ import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/model/flavor.dart';
 import 'package:coffea/bean/model/roast.dart';
 import 'package:coffea/bean/use_case/add_bean.dart';
-import 'package:coffea/bean/use_case/get_flavors.dart';
-import 'package:coffea/bean/use_case/get_roasts.dart';
+import 'package:coffea/bean/use_case/find_flavors.dart';
+import 'package:coffea/bean/use_case/find_roasts.dart';
 import 'package:coffea/roaster/model/roaster.dart';
 import 'package:coffea/roaster/use_case/find_roasters.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +19,16 @@ class AddBeanPage extends StatefulWidget {
 
 class AddBeanPageState extends State<AddBeanPage> {
   final addBean = Modular.get<AddBean>();
-  final findFlavors = Modular.get<GetFlavors>();
-  final findRoasters = Modular.get<GetRoasters>();
-  final findRoasts = Modular.get<GetRoasts>();
+  final findFlavors = Modular.get<FindFlavors>();
+  final findRoasters = Modular.get<FindRoasters>();
+  final findRoasts = Modular.get<FindRoasts>();
   final _formData = _AddBeanFormData(GlobalKey<FormState>());
 
   @override
   void initState() {
     super.initState();
-    findFlavors.getAll();
-    findRoasts.getAll();
+    findFlavors.findAll();
+    findRoasts.findAll();
   }
 
   @override
@@ -51,7 +51,7 @@ class AddBeanPageState extends State<AddBeanPage> {
                   return null;
                 },
               ),
-              BlocBuilder<GetRoasters, List<Roaster>>(
+              BlocBuilder<FindRoasters, List<Roaster>>(
                 bloc: findRoasters,
                 builder: (context, state) {
                   return DropdownButtonFormField<Roaster>(
@@ -70,7 +70,7 @@ class AddBeanPageState extends State<AddBeanPage> {
                   );
                 },
               ),
-              BlocBuilder<GetRoasts, GetRoastsState>(
+              BlocBuilder<FindRoasts, GetRoastsState>(
                 bloc: findRoasts,
                 builder: (context, state) {
                   return DropdownButtonFormField<Roast>(
