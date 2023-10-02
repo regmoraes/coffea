@@ -69,7 +69,7 @@ class _FlavorsState extends State<FlavorsPage> {
                         itemCount: filtered.length,
                         itemBuilder: (context, index) {
                           final flavor = filtered.elementAt(index);
-                          final flavorColor = Color(flavor.color);
+                          final flavorColor = Color(flavor.colorHex);
                           return ListTile(
                             key: ValueKey(flavor.name),
                             title: Text(

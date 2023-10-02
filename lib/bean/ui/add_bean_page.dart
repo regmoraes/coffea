@@ -97,7 +97,7 @@ class AddBeanPageState extends State<AddBeanPage> {
                   (flavor) {
                     return Chip(
                       label: Text(flavor.name),
-                      backgroundColor: Color(flavor.color),
+                      backgroundColor: Color(flavor.colorHex),
                       onDeleted: () {
                         setState(() => _formData.beanFlavors.remove(flavor));
                       },

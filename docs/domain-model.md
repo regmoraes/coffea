@@ -12,7 +12,11 @@ classDiagram
         double waterQuantity
     }
 
-    class Flavor
+    class Flavor {
+        name
+        color
+        Flavor[] flavors
+    }
 
     class Method {
         name
@@ -65,6 +69,7 @@ classDiagram
 
     Bean ..> "1..*" Flavor
     Bean ..> Roast
+    Flavor ..> "0..*" Flavor
     Experiment ..> Recipe
     Experiment --> "1..*" Adjustment
     Producer ..> "0..*" Bean

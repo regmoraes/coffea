@@ -9,12 +9,12 @@ import 'package:coffea/bean/use_case/find_grind_sizes.dart';
 import 'package:coffea/bean/use_case/find_roasts.dart';
 import 'package:coffea/recipe/repository/method_repository.dart';
 import 'package:coffea/recipe/repository/recipe_repository.dart';
-import 'package:coffea/recipe/ui/add_recipe_page.dart';
 import 'package:coffea/recipe/ui/add_step_page.dart';
 import 'package:coffea/recipe/ui/make_recipe_page.dart';
+import 'package:coffea/recipe/ui/new_recipe_page.dart';
 import 'package:coffea/recipe/ui/recipe_page.dart';
 import 'package:coffea/recipe/ui/recipes_page.dart';
-import 'package:coffea/recipe/use_case/add_recipe.dart';
+import 'package:coffea/recipe/use_case/create_recipe.dart';
 import 'package:coffea/recipe/use_case/find_methods.dart';
 import 'package:coffea/recipe/use_case/find_recipes.dart';
 import 'package:coffea/recipe/use_case/make_recipe.dart';
@@ -37,7 +37,7 @@ class CoffeaModule extends Module {
     i.addSingleton(RecipeRepository.new);
     i.addSingleton(RoasterRepository.new);
     i.addSingleton(AddBean.new);
-    i.addSingleton(AddRecipe.new);
+    i.addSingleton(CreateRecipe.new);
     i.addSingleton(AddRoaster.new);
     i.addSingleton(FindBeans.new);
     i.addSingleton(FindFlavors.new);
@@ -61,7 +61,7 @@ class CoffeaModule extends Module {
       ],
     );
     r.child('/add-bean', child: (_) => const AddBeanPage());
-    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-recipe', child: (_) => const NewRecipePage());
     r.child('/add-roaster', child: (_) => const AddRoasterPage());
     r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
     r.child('/flavors', child: (_) => FlavorsPage(r.args.data));
@@ -69,7 +69,7 @@ class CoffeaModule extends Module {
     r.child('/recipes/make', child: (_) => MakeRecipePage(r.args.data));
     r.child('/recipes/steps', child: (_) => AddStepPage(recipeBuilder: r.args.data));
     r.child('/add-bean', child: (_) => const AddBeanPage());
-    r.child('/add-recipe', child: (_) => const AddRecipePage());
+    r.child('/add-recipe', child: (_) => const NewRecipePage());
     r.child('/add-roaster', child: (_) => const AddRoasterPage());
     r.child('/beans/recipes', child: (_) => RecipesPage(bean: r.args.data));
     r.child('/flavors', child: (_) => FlavorsPage(r.args.data));

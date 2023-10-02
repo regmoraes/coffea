@@ -1,11 +1,12 @@
 import 'package:coffea/recipe/model/recipe_builder.dart';
+import 'package:coffea/recipe/ui/new_recipe_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class RecipeStepsTab extends StatefulWidget {
-  final RecipeBuilder recipeBuilder;
+  final NewRecipeFormData formData;
 
-  const RecipeStepsTab({Key? key, required this.recipeBuilder})
+  const RecipeStepsTab({Key? key, required this.formData})
       : super(key: key);
 
   @override
@@ -20,17 +21,17 @@ class RecipeStepsTabState extends State<RecipeStepsTab> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.recipeBuilder.steps.isEmpty) ...[
+          if (widget.formData.recipeBuilder.steps.isEmpty) ...[
             const Center(
               child: Text("Add new step"),
             )
           ] else ...[
             Expanded(
               child: ListView.builder(
-                itemCount: widget.recipeBuilder.steps.length,
+                itemCount: widget.formData.recipeBuilder.steps.length,
                 shrinkWrap: true,
                 itemBuilder: (context, position) {
-                  final step = widget.recipeBuilder.steps[position];
+                  final step = widget.formData.recipeBuilder.steps[position];
                   return ListTile(leading: Text(step.description));
                 },
               ),
@@ -40,7 +41,7 @@ class RecipeStepsTabState extends State<RecipeStepsTab> {
             onPressed: () async {
               await Modular.to.pushNamed(
                 '/recipes/steps',
-                arguments: widget.recipeBuilder,
+                arguments: widget.formData.recipeBuilder,
               );
               setState(() {});
             },

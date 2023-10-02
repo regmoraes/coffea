@@ -43,27 +43,42 @@ Future<Map<String, dynamic>> _getCoffeaJsonData() async {
   return jsonDecode(data);
 }
 
-
 Future<void> _loadFlavorsData(Isar database, Map<String, dynamic> jsonData) async {
-  await database.writeTxn(() async {
-    database.collection<Roast>().importJson(List.from(jsonData['flavors']));
-  });
+  final count = await database.collection<Flavor>().count();
+
+  if (count == 0) {
+    await database.writeTxn(() async {
+      database.collection<Flavor>().importJson(List.from(jsonData['flavors']));
+    });
+  }
 }
 
 Future<void> _loadGrindSizeData(Isar database, Map<String, dynamic> jsonData) async {
-  await database.writeTxn(() async {
-    database.collection<GrindSize>().importJson(List.from(jsonData['grind_sizes']));
-  });
+  final count = await database.collection<GrindSize>().count();
+
+  if (count == 0) {
+    await database.writeTxn(() async {
+      database.collection<GrindSize>().importJson(List.from(jsonData['grind_sizes']));
+    });
+  }
 }
 
 Future<void> _loadMethodsData(Isar database, Map<String, dynamic> jsonData) async {
-  await database.writeTxn(() async {
-    database.collection<Method>().importJson(List.from(jsonData['methods']));
-  });
+  final count = await database.collection<Method>().count();
+
+  if (count == 0) {
+    await database.writeTxn(() async {
+      database.collection<Method>().importJson(List.from(jsonData['methods']));
+    });
+  }
 }
 
 Future<void> _loadRoastData(Isar database, Map<String, dynamic> jsonData) async {
-  await database.writeTxn(() async {
-    database.collection<Roast>().importJson(List.from(jsonData['roasts']));
-  });
+  final count = await database.collection<Roast>().count();
+
+  if (count == 0) {
+    await database.writeTxn(() async {
+      database.collection<Roast>().importJson(List.from(jsonData['roasts']));
+    });
+  }
 }

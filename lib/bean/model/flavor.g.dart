@@ -20,7 +20,7 @@ const FlavorSchema = CollectionSchema(
     r'color': PropertySchema(
       id: 0,
       name: r'color',
-      type: IsarType.long,
+      type: IsarType.string,
     ),
     r'name': PropertySchema(
       id: 1,
@@ -55,6 +55,7 @@ int _flavorEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.color.length * 3;
   bytesCount += 3 + object.name.length * 3;
   return bytesCount;
 }
@@ -65,7 +66,7 @@ void _flavorSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.color);
+  writer.writeString(offsets[0], object.color);
   writer.writeString(offsets[1], object.name);
 }
 
@@ -76,7 +77,7 @@ Flavor _flavorDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Flavor();
-  object.color = reader.readLong(offsets[0]);
+  object.color = reader.readString(offsets[0]);
   object.id = id;
   object.name = reader.readString(offsets[1]);
   return object;
@@ -90,7 +91,7 @@ P _flavorDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     default:
@@ -187,46 +188,55 @@ extension FlavorQueryWhere on QueryBuilder<Flavor, Flavor, QWhereClause> {
 }
 
 extension FlavorQueryFilter on QueryBuilder<Flavor, Flavor, QFilterCondition> {
-  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorEqualTo(int value) {
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'color',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorGreaterThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'color',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorLessThan(
-    int value, {
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'color',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorBetween(
-    int lower,
-    int upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -235,6 +245,75 @@ extension FlavorQueryFilter on QueryBuilder<Flavor, Flavor, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'color',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'color',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'color',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'color',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'color',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Flavor, Flavor, QAfterFilterCondition> colorIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'color',
+        value: '',
       ));
     });
   }
@@ -546,9 +625,10 @@ extension FlavorQuerySortThenBy on QueryBuilder<Flavor, Flavor, QSortThenBy> {
 }
 
 extension FlavorQueryWhereDistinct on QueryBuilder<Flavor, Flavor, QDistinct> {
-  QueryBuilder<Flavor, Flavor, QDistinct> distinctByColor() {
+  QueryBuilder<Flavor, Flavor, QDistinct> distinctByColor(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'color');
+      return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
     });
   }
 
@@ -567,7 +647,7 @@ extension FlavorQueryProperty on QueryBuilder<Flavor, Flavor, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Flavor, int, QQueryOperations> colorProperty() {
+  QueryBuilder<Flavor, String, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
     });

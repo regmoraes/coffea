@@ -4,17 +4,17 @@ import 'package:coffea/recipe/ui/recipe_details_tab.dart';
 import 'package:coffea/recipe/ui/recipe_steps_tab.dart';
 import 'package:flutter/material.dart';
 
-class AddRecipePage extends StatefulWidget {
+class NewRecipePage extends StatefulWidget {
   final Bean? bean;
 
-  const AddRecipePage({Key? key, this.bean}) : super(key: key);
+  const NewRecipePage({Key? key, this.bean}) : super(key: key);
 
   @override
-  AddRecipePageState createState() => AddRecipePageState();
+  NewRecipePageState createState() => NewRecipePageState();
 }
 
-class AddRecipePageState extends State<AddRecipePage> {
-  final _formData = _AddRecipeFormData(GlobalKey<FormState>());
+class NewRecipePageState extends State<NewRecipePage> {
+  final formData = NewRecipeFormData(GlobalKey<FormState>());
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class AddRecipePageState extends State<AddRecipePage> {
         ),
         body: TabBarView(
           children: [
-            RecipeDetailsTab(recipeBuilder: _formData.recipeBuilder),
-            RecipeStepsTab(recipeBuilder: _formData.recipeBuilder),
+            RecipeDetailsTab(formData: formData),
+            RecipeStepsTab(formData: formData),
           ],
         ),
       ),
@@ -41,11 +41,11 @@ class AddRecipePageState extends State<AddRecipePage> {
   }
 }
 
-class _AddRecipeFormData {
+class NewRecipeFormData {
   GlobalKey<FormState> formKey;
   RecipeBuilder recipeBuilder = RecipeBuilder();
 
-  _AddRecipeFormData(this.formKey);
+  NewRecipeFormData(this.formKey);
 
   bool get isValid => formKey.currentState?.validate() ?? false;
 }

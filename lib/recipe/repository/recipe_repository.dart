@@ -15,7 +15,7 @@ class RecipeRepository {
     return database.recipes.where().filter().bean((query) => query.idEqualTo(bean.id)).findAll();
   }
 
-  Future<int> addRecipe(Recipe recipe) {
-    return database.recipes.put(recipe);
+  Future<int> save(Recipe recipe) async {
+    return database.writeTxn(() => database.recipes.put(recipe));
   }
 }

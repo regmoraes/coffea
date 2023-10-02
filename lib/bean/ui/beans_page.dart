@@ -1,3 +1,5 @@
+import 'package:coffea/application/data/event.dart';
+import 'package:coffea/bean/model/bean.dart';
 import 'package:coffea/bean/use_case/find_beans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,14 +24,14 @@ class _BeansPageState extends State<BeansPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FindBeans, FindBeansState>(
+      body: BlocBuilder<FindBeans, Event<List<Bean>>>(
         bloc: findBeans,
-        builder: (context, state) {
-          if (state is BeansFound) {
+        builder: (context, event) {
+          if (event is Success<List<Bean>>) {
             return ListView.builder(
-              itemCount: state.beans.length,
+              itemCount: event.data.length,
               itemBuilder: (context, index) {
-                final bean = state.beans.elementAt(index);
+                final bean = event.data.elementAt(index);
                 return ListTile(title: Text(bean.name));
               },
             );

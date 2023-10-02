@@ -8,7 +8,9 @@ class Flavor {
 
   late String name;
 
-  late int color;
+  late String color;
 
   final flavors = IsarLinks<Flavor>();
+
+  int get colorHex => int.parse(color, radix: 16);
 }

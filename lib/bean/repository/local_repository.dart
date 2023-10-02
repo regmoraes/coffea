@@ -9,8 +9,8 @@ class BeanRepository {
 
   BeanRepository(this.database);
 
-  Future<int> addBean(Bean bean) async {
-    return await database.writeTxnSync(() => database.beans.putSync(bean));
+  Future<int> save(Bean bean) async {
+    return database.writeTxn(() => database.beans.put(bean));
   }
 
   Future<List<Bean>> findBeans() {
